@@ -1,3 +1,9 @@
+<?php
+require_once "../../controller/ability/index_controller.php";
+$controller = new index_controller;
+$H = $controller->Load();
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -15,15 +21,15 @@
   <form method="POST">
     <div>
       能力コード
-      <input type="text" name="ability_cd">
+      <input type="text" name="ability_cd" value="<?= !empty($H['search']['ability_cd']) ? $H['search']['ability_cd'] : ''; ?>">
       能力名
-      <input type="text"name="ability_name">
+      <input type="text"name="ability_name" value="<?= !empty($H['search']['ability_name']) ? $H['search']['ability_name'] : ''; ?>">
     </div>
     
     <div>
       <input type="submit" value="検索" name="btn_search">
-      <input type="button" value="リセット" name="btn_reset">
-      <input type="button" value="追加" name="btn_insert">
+      <input type="reset" value="リセット" name="btn_reset">
+      <a href="edit.php">追加</a>
     </div>
   </form>
 
@@ -42,14 +48,13 @@
         <tr>
           <th></th>
           <th></th>
-          <th></th>
-          <th></th>
+          <th><a href="edit.php?c=">更新</a></th>
+          <th><a href="conf.php?c=">削除</a></th>
         </tr>
       <?php } ?>
     </table>
   </div>
 
-  <a>前のページ</a>
-  <a>次のページ</a>
-
+  <a href="index.php?p=">前のページ</a>
+  <a href="index.php?p=">次のページ</a>
 </body>

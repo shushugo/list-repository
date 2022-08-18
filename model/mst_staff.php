@@ -8,7 +8,7 @@ class mst_staff {
   define('PASSWORD' , 'test');
 
   //データ取得
-  public function GetData {
+  public function GetData() {
     try {
       $select = 'SELECT * FROM mst_staff';
       $dbh = new PDO(DSN, USER, PASSWORD, [
@@ -24,7 +24,7 @@ class mst_staff {
   }
 
   //データ挿入
-  public function Insert {
+  public function Insert() {
     try {
       $insert = 'INSERT INTO mst_staff';
       $dbh = new PDO(DSN, USER, PASSWORD, [
@@ -40,7 +40,7 @@ class mst_staff {
   }
 
   //データ更新
-  public function Update {
+  public function Update() {
     try {
       $insert = 'UPDATE mst_staff';
       $dbh = new PDO(DSN, USER, PASSWORD, [
