@@ -32,6 +32,12 @@ class index_controller {
 
     //能力マスタの総件数を取得
     $H['count'] = $mst_ability->GetDataCount();
+var_dump($H['search']);
+    //検索用セッションに値がある場合は検索条件に含めて能力マスタを検索
+    if (!empty($_SESSION['ability']['search'])) {
+      $H['data'] = $mst_ability->GetData($H['search']);
+    }
+
 
     return $H;
   }

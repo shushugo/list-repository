@@ -9,6 +9,13 @@ class mst_ability {
     define('PASSWORD' , '');
   }
 
+  //Where文の生成
+  public function CreateWhere($arr) {
+    if (!empty($arr['ability_cd'])) {
+      $where = ' AND ability_cd LIKE :ability_cd';
+    }
+  }
+
   //データの数を取得
   public function GetDataCount() {
     try {
@@ -27,13 +34,15 @@ class mst_ability {
   
 
   //データ取得
-  public function GetData() {
+  public function GetData($arr) {
     try {
       $select = 'SELECT * FROM mst_ability';
+      $where = $this->CreateWhere($arr);
+      $limit = ' LIMIT 10';
       $dbh = new PDO(DSN, USER, PASSWORD, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       ]);
-      $sql = $select.$where.$order;
+      $sql = $select.$where.$limit;
       $stmt = $dbh->prepare($sql);
       $stmt->execute();
       return $stmt->fetchAll();
