@@ -11,7 +11,7 @@ class mst_ability {
 
   //Where文の生成
   public function CreateWhere($arr) {
-    $where = ' 1 = 1';
+    $where = ' WHERE 1 = 1';
     $params = [];
     
     if (!empty($arr['ability_cd'])) {
@@ -28,14 +28,19 @@ class mst_ability {
   }
 
   //データの数を取得
-  public function GetDataCount() {
+  public function GetDataCount($arr) {
     try {
       $select = 'SELECT COUNT(*) FROM mst_ability';
+      $where = $this->CreateWhere($arr)['where'];
+      $params = $this->CreateWhere($arr)['params'];
       $dbh = new PDO(DSN, USER, PASSWORD, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       ]);
-      $sql = $select;
+      $sql = $select.$where;
       $stmt = $dbh->prepare($sql);
+      foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+      }
       $stmt->execute();
       return $stmt->fetchColumn();
     } catch (PDOException $e) {

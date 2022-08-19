@@ -2,7 +2,7 @@
 class controller {
 
   public function Get_Start_Num($p, $count) {
-    $rtn = $p * 10 - 10 + 1;
+    $rtn = $p * 10 - 9;
     if ($rtn > $count) {
       return $count;
     }
@@ -10,11 +10,11 @@ class controller {
   }
 
   public function Get_Last_Num($p, $count) {
-    $rtn = $p * 10 - 10 + 1;
-    if ($p * 10 < $count) {
-      return $p * 10;
+    $rtn = $p * 10 + 1;
+    if ($rtn > $count) {
+      return $count;
     }
-    return $count;
+    return $rtn;
   }
 
 }

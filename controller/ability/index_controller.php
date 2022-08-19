@@ -2,6 +2,7 @@
 class index_controller extends controller {
 
   public function Load() {
+    //モデルの読み込み
     require_once "../../model/mst_ability.php";
     $mst_ability = new mst_ability;
 
@@ -14,26 +15,15 @@ class index_controller extends controller {
       ]
     ];
 
-    
-
     //能力登録用のセッションを破棄する
     unset($_SESSION['ability']['register']);
 
     //検索クリック時
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      foreach ($H['search'] as $key => $value) {
-        $_SESSION['ability']['search'][$key] = filter_input(INPUT_POST, $key);
-      }
+    //if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    foreach ($H['search'] as $key => $value) {
+      $_SESSION['ability']['search'][$key] = filter_input(INPUT_POST, $key);
     }
-
-    //能力検索用セッションに検索条件がある場合は(1)能力コード、(2)能力名に値を格納する
-    if (!empty($_SESSION['ability']['search'])) {
-      foreach ($H['search'] as $key => $value) {
-        $H['search'][$key] = $_SESSION['ability']['search'][$key];
-      }
-      //検索用セッションに値がある場合は検索条件に含めて能力マスタを検索
-      $H['data'] = $mst_ability->GetData($H['search']);
-    }
+    //}
 
     //リセットクリック時、検索項目を初期化する
     if (isset($_POST['btn_reset'])) {
@@ -42,20 +32,32 @@ class index_controller extends controller {
       }
     }
 
+    //能力検索用セッションに検索条件がある場合は(1)能力コード、(2)能力名に値を格納する
+    if (!empty($_SESSION['ability']['search']['ability_cd']) || !empty($_SESSION['ability']['search']['ability_name'])) {
+      foreach ($H['search'] as $key => $value) {
+        $H['search'][$key] = $_SESSION['ability']['search'][$key];
+      }
+      
+    }
+
+    //検索用セッションに値がある場合は検索条件に含めて能力マスタを検索
+    $H['data'] = $mst_ability->GetData($H['search']);
+
     //能力マスタの総件数を取得
-    $H['count'] = $mst_ability->GetDataCount();
+    $H['count'] = $mst_ability->GetDataCount($H['search']);
 
     //現在のページ番号を取得して$_GETの値があったらそれを代入する
     $H['page'] = filter_input(INPUT_GET, 'p');
 
     if (empty($H['page'])) {
-      //最初は1ページ
       $H['page'] = 1;
     }
 
     $H['maxpage'] = ceil($H['count'] / 10);
     $H['small_num'] = $this->Get_Start_Num($H['page'], $H['count']);
-    $H['max_num'] = $this->Get_Start_Num($H['page'], $H['count']);
+    $H['max_num'] = $this->Get_Last_Num($H['page'], $H['count']);
+    //var_dump($H['count']);
+
 
     return $H;
   }

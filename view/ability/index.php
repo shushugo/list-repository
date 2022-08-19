@@ -34,34 +34,38 @@ $H = $controller->Load();
     </div>
   </form>
 
-  何件なのか
-
-  <div>
-    <table border="1">
-      <tr>
-        <th>能力コード</th>
-        <th>能力名</th>
-        <th>更新</th>
-        <th>削除</th>
-      </tr>
-
-      <?php foreach($H['data'] as $key => $value) { ?>
+  <?php if ($H['data']) { ?>
+    <?= $H['count'] ?>件中<?= $H['small_num'] ?>～<?= $H['max_num'] ?>
+    
+    <div>
+      <table border="1">
         <tr>
-          <th></th>
-          <th></th>
-          <th><a href="edit.php?c=">更新</a></th>
-          <th><a href="conf.php?c=">削除</a></th>
+          <th>能力コード</th>
+          <th>能力名</th>
+          <th>更新</th>
+          <th>削除</th>
         </tr>
-      <?php } ?>
-    </table>
-  </div>
-
-  <?php if ($H['page'] !== 1) { ?>
-    <a href="index.php?p=<?= $H['page'] -1?>">前のページ</a>
-  <?php } ?>
-
-  <?php if ($H['page'] !== $H['maxpage']) { ?>
-    <a href="index.php?p=<?= $H['page'] +1?>">次のページ</a>
+        
+        <?php foreach($H['data'] as $key => $value) { ?>
+          <tr>
+            <th><?= $H['data'][$key]['ability_cd'] ?></th>
+            <th><?= $H['data'][$key]['ability_name'] ?></th>
+            <th><a href="edit.php?c=<?= $H['data'][$key]['ability_cd'] ?>">更新</a></th>
+            <th><a href="conf.php?c=<?= $H['data'][$key]['ability_cd'] ?>">削除</a></th>
+          </tr>
+        <?php } ?>
+      </table>
+    </div>
+    
+    <?php if ($H['page'] != 1) { ?>
+      <a href="index.php?p=<?= $H['page'] -1?>">前のページ</a>
+    <?php } ?>
+    
+    <?php if ($H['page'] != $H['maxpage']) { ?>
+      <a href="index.php?p=<?= $H['page'] +1?>">次のページ</a>
+    <?php } ?>
+  <?php } else { ?>
+    「データが存在しません」
   <?php } ?>
   
 </body>
