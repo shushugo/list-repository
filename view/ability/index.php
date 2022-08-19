@@ -1,4 +1,5 @@
 <?php
+require_once "../../controller/controller.php";
 require_once "../../controller/ability/index_controller.php";
 $controller = new index_controller;
 $H = $controller->Load();
@@ -28,7 +29,7 @@ $H = $controller->Load();
     
     <div>
       <input type="submit" value="検索" name="btn_search">
-      <input type="reset" value="リセット" name="btn_reset">
+      <button type="submit" value="1" name="btn_reset">リセット</button>
       <a href="edit.php">追加</a>
     </div>
   </form>
@@ -44,7 +45,7 @@ $H = $controller->Load();
         <th>削除</th>
       </tr>
 
-      <?php foreach($data as $key => $value) { ?>
+      <?php foreach($H['data'] as $key => $value) { ?>
         <tr>
           <th></th>
           <th></th>
@@ -55,6 +56,12 @@ $H = $controller->Load();
     </table>
   </div>
 
-  <a href="index.php?p=">前のページ</a>
-  <a href="index.php?p=">次のページ</a>
+  <?php if ($H['page'] !== 1) { ?>
+    <a href="index.php?p=<?= $H['page'] -1?>">前のページ</a>
+  <?php } ?>
+
+  <?php if ($H['page'] !== $H['maxpage']) { ?>
+    <a href="index.php?p=<?= $H['page'] +1?>">次のページ</a>
+  <?php } ?>
+  
 </body>

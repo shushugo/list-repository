@@ -1,9 +1,10 @@
 <?php
-class index_controller {
+class index_controller extends controller {
 
   public function Load() {
     require_once "../../model/mst_ability.php";
     $mst_ability = new mst_ability;
+
     session_start();
 
     $H = [
@@ -12,6 +13,8 @@ class index_controller {
         'ability_name' => ''
       ]
     ];
+
+    
 
     //能力登録用のセッションを破棄する
     unset($_SESSION['ability']['register']);
@@ -28,16 +31,31 @@ class index_controller {
       foreach ($H['search'] as $key => $value) {
         $H['search'][$key] = $_SESSION['ability']['search'][$key];
       }
+      //検索用セッションに値がある場合は検索条件に含めて能力マスタを検索
+      $H['data'] = $mst_ability->GetData($H['search']);
+    }
+
+    //リセットクリック時、検索項目を初期化する
+    if (isset($_POST['btn_reset'])) {
+      foreach ($H['search'] as $key => $value) {
+        unset($H['search'][$key]);
+      }
     }
 
     //能力マスタの総件数を取得
     $H['count'] = $mst_ability->GetDataCount();
-var_dump($H['search']);
-    //検索用セッションに値がある場合は検索条件に含めて能力マスタを検索
-    if (!empty($_SESSION['ability']['search'])) {
-      $H['data'] = $mst_ability->GetData($H['search']);
+
+    //現在のページ番号を取得して$_GETの値があったらそれを代入する
+    $H['page'] = filter_input(INPUT_GET, 'p');
+
+    if (empty($H['page'])) {
+      //最初は1ページ
+      $H['page'] = 1;
     }
 
+    $H['maxpage'] = ceil($H['count'] / 10);
+    $H['small_num'] = $this->Get_Start_Num($H['page'], $H['count']);
+    $H['max_num'] = $this->Get_Start_Num($H['page'], $H['count']);
 
     return $H;
   }

@@ -11,9 +11,20 @@ class mst_ability {
 
   //Where文の生成
   public function CreateWhere($arr) {
+    $where = ' 1 = 1';
+    $params = [];
+    
     if (!empty($arr['ability_cd'])) {
-      $where = ' AND ability_cd LIKE :ability_cd';
+      $where .= ' AND ability_cd LIKE :ability_cd';
+      $params += [':ability_cd' => $arr['ability_cd']];
     }
+    
+    if (!empty($arr['ability_name'])) {
+      $where .= ' AND ability_name LIKE :ability_name';
+      $params += [':ability_name' => '%'.$arr['ability_name'].'%'];
+    }
+
+    return ['where' => $where, 'params' => $params];
   }
 
   //データの数を取得
@@ -37,13 +48,17 @@ class mst_ability {
   public function GetData($arr) {
     try {
       $select = 'SELECT * FROM mst_ability';
-      $where = $this->CreateWhere($arr);
+      $where = $this->CreateWhere($arr)['where'];
       $limit = ' LIMIT 10';
+      $params = $this->CreateWhere($arr)['params'];
       $dbh = new PDO(DSN, USER, PASSWORD, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       ]);
       $sql = $select.$where.$limit;
       $stmt = $dbh->prepare($sql);
+      foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+      }
       $stmt->execute();
       return $stmt->fetchAll();
     } catch (PDOException $e) {
