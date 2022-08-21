@@ -36,21 +36,21 @@ class index_controller extends controller {
     }
 
     //検索用セッションに値がある場合は検索条件に含めて能力マスタを検索
-    $H['data'] = $mst_ability->GetData($H['search']);
+    $H['data'] = $mst_ability->GetList($H['search']);
 
     //能力マスタの総件数を取得
     $H['count'] = $mst_ability->GetDataCount($H['search']);
 
     //現在のページ番号を取得して$_GETの値があったらそれを代入する
-    $H['page'] = filter_input(INPUT_GET, 'p');
+    $H['p'] = filter_input(INPUT_GET, 'p');
 
-    if (empty($H['page'])) {
-      $H['page'] = 1;
+    if (empty($H['p'])) {
+      $H['p'] = 1;
     }
 
     $H['maxpage'] = ceil($H['count'] / 10);
-    $H['small_num'] = $this->Get_Start_Num($H['page'], $H['count']);
-    $H['max_num'] = $this->Get_Last_Num($H['page'], $H['count']);
+    $H['small_num'] = $this->Get_Start_Num($H['p'], $H['count']);
+    $H['max_num'] = $this->Get_Last_Num($H['p'], $H['count']);
 
     return $H;
   }

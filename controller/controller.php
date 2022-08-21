@@ -17,5 +17,23 @@ class controller {
     return $rtn;
   }
 
+  public function IsRequired($data) {
+    if (empty($data)) {
+      $rtn = '入力してください。';
+      return $rtn;
+    } else {
+      return;
+    }
+  }
+
+  public function IsMaxLength($data, $num) {
+    if (mb_strlen($data) > $num) {
+      $rtn = $num.'文字以下で入力してください';
+      return $rtn;
+    } else {
+      return;
+    }
+  }
+
 }
 ?>

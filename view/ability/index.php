@@ -57,12 +57,12 @@ $H = $controller->Load();
       </table>
     </div>
     
-    <?php if ($H['page'] != 1) { ?>
-      <a href="index.php?p=<?= $H['page'] -1?>">前のページ</a>
+    <?php if ($H['p'] != 1) { ?>
+      <a href="index.php?p=<?= $H['p'] -1?>">前のページ</a>
     <?php } ?>
     
-    <?php if ($H['page'] != $H['maxpage']) { ?>
-      <a href="index.php?p=<?= $H['page'] +1?>">次のページ</a>
+    <?php if ($H['p'] != $H['maxpage']) { ?>
+      <a href="index.php?p=<?= $H['p'] +1?>">次のページ</a>
     <?php } ?>
   <?php } else { ?>
     「データが存在しません」

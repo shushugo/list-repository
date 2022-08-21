@@ -48,9 +48,30 @@ class mst_ability {
     }
   }
   
-
   //データ取得
   public function GetData($arr) {
+    try {
+      $select = 'SELECT * FROM mst_ability';
+      $where = $this->CreateWhere($arr)['where'];
+      $limit = ' LIMIT 10';
+      $params = $this->CreateWhere($arr)['params'];
+      $dbh = new PDO(DSN, USER, PASSWORD, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      ]);
+      $sql = $select.$where.$limit;
+      $stmt = $dbh->prepare($sql);
+      foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+      }
+      $stmt->execute();
+      return $stmt->fetch();
+    } catch (PDOException $e) {
+      echo 'エラーメッセージ:「データが存在しません」: ' . $e->getMessage();
+    }
+  }
+
+  //データ取得
+  public function GetList($arr) {
     try {
       $select = 'SELECT * FROM mst_ability';
       $where = $this->CreateWhere($arr)['where'];
