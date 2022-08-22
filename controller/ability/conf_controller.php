@@ -32,7 +32,7 @@ class conf_controller extends controller {
         header( "Location: index.php" );
 	      exit;
       }
-
+      
       //能力登録用セッションに取得したデータを格納する
       $_SESSION['ability']['register'] = $H['register'];
 
