@@ -32,5 +32,11 @@ $H = $controller->Load();
 
     <a href= <?= (isset($H['c'])) ? 'index.php' : 'edit.php'; ?>>戻る</a>
 
-    <a href='comp.php'><?= (isset($H['c'])) ? '削除' : '登録'; ?></a>
+    <?php if (isset($H['c'])) { ?>
+      <a href='comp.php?d=1'>削除</a>
+    <?php } else if (isset($H['u'])){ ?>
+      <a href='comp.php?u=1'>登録</a>
+    <?php } else { ?>
+      <a href='comp.php'>登録</a>
+    <?php } ?>
 </body>

@@ -22,6 +22,7 @@ class conf_controller extends controller {
     ];
 
     $H['c'] = filter_input(INPUT_GET, 'c');
+    $H['u'] = filter_input(INPUT_GET, 'u');
 
     //能力コードがある場合は能力マスタからデータを取得し、値を格納する
     if ($H['c']) {
@@ -32,7 +33,7 @@ class conf_controller extends controller {
         header( "Location: index.php" );
 	      exit;
       }
-      
+
       //能力登録用セッションに取得したデータを格納する
       $_SESSION['ability']['register'] = $H['register'];
 

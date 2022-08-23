@@ -124,6 +124,22 @@ class mst_ability {
     }
   }
 
+  //データ削除
+  public function Delete() {
+    try {
+      $delete = 'DELETE mst_ability';
+      $dbh = new PDO(DSN, USER, PASSWORD, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      ]);
+      $sql = $delete.$where.$order;
+      $stmt = $dbh->prepare($sql);
+      $stmt->execute();
+      return $stmt->fetchAll();
+    } catch (PDOException $e) {
+      echo 'エラーメッセージ:「データが存在しません」: ' . $e->getMessage();
+    }
+  }
+
 }
 
 ?>

@@ -46,8 +46,15 @@ class edit_controller extends controller {
         foreach ($H['register'] as $key =>$value)  {
           $_SESSION['ability']['register'][$key] = $data[$key];
         }
+
+        if ($H['c']) {
+          header( "Location: conf.php?u=1" );
+          exit;
+        } else {
           header( "Location: conf.php" );
           exit;
+        }
+          
       }
     }
 
