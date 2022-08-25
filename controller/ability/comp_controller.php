@@ -11,17 +11,22 @@ class comp_controller extends controller {
     $delete = filter_input(INPUT_GET, 'd');
     $update = filter_input(INPUT_GET, 'u');
 
+    $data = $_SESSION['ability']['register'];
+
     //能力登録用セッションに値がある場合
-    if (isset($_SESSION['ability']['register'])) {
+    if ($data) {
       if ($delete) {
         //データ削除
-        $res = $mst_ability->Delete();
+        $H['crud'] = '削除';
+        $H['res'] = $mst_ability->Delete($data);
       } else if ($update) {
         //データ更新
-        $res = $mst_ability->Delete();
+        $H['crud'] = '更新';
+        $H['res'] = $mst_ability->Update($data);
       } else {
         //データ追加
-        $res = $mst_ability->Insert();
+        $H['crud'] = '追加';
+        $H['res'] = $mst_ability->Insert($data);
       }
     } else {
       header( "Location: index.php" );
@@ -30,10 +35,6 @@ class comp_controller extends controller {
 
     //能力登録用セッションを破棄する
     unset($_SESSION['ability']['register']);
-
-
-
-
 
     return $H;
   }
