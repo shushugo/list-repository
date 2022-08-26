@@ -1,6 +1,11 @@
 <?php
 class controller {
 
+  public function h($data) {
+    //var_dump($data);
+    return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+  }
+
   //$_POST、$_GETの値を取得する
   public function Set_Post_Params($key) {
     $rtn = filter_input(INPUT_POST, $key);

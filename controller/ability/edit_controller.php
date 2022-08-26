@@ -38,6 +38,7 @@ class edit_controller extends controller {
 
       //入力したデータ
       $H['data'][$key] = $this->Set_Post_Params($key);
+      $this->h($H['data'][$key]);
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
