@@ -1,141 +1,68 @@
 <?php 
 
-class mst_ability {
-  
-  function __construct() {
-    //定数
-    define('DSN' , 'mysql:dbname=test;host=localhost;charset=utf8mb4');
-    define('USER' , 'root');
-    define('PASSWORD' , '');
-  }
+class mst_ability extends SQL {
 
-  //Where文の生成
-  public function CreateWhere($arr) {
-    $where = ' WHERE 1 = 1';
-    $params = [];
-    
-    if (!empty($arr['ability_cd'])) {
-      $where .= ' AND ability_cd LIKE :ability_cd';
-      $params += [':ability_cd' => $arr['ability_cd']];
-    }
-    
-    if (!empty($arr['ability_name'])) {
-      $where .= ' AND ability_name LIKE :ability_name';
-      $params += [':ability_name' => '%'.$arr['ability_name'].'%'];
-    }
-
-    return ['where' => $where, 'params' => $params];
-  }
+  public $H = [
+    'item' => [
+      'ability_cd' => '',
+      'ability_name' => '',
+      'ability_name_kana' => ''
+    ]
+  ];
 
   //更新の際のSET文を生成
   public function CreateSet($arr) {
-    $set = ' SET ';
+    $set = ' SET';
+    $params = [];
     
-    if (!empty($arr['ability_name'])) {
-      $set .= ' ability_name = \''.$arr['ability_name'].'\'';
+    if (!empty($arr['ability_name']) && !empty($arr['ability_name_kana'])) {
+      $set .= ' ability_name = :ability_name, ability_name_kana = :ability_name_kana';
+      $params += [':ability_name' => $arr['ability_name']];
+      $params += [':ability_name_kana' => $arr['ability_name_kana']];
+    } else if (!empty($arr['ability_name'])) {
+      $set .= ' ability_name = :ability_name';
+      $params += [':ability_name' => $arr['ability_name']];
+    } else if (!empty($arr['ability_name_kana'])) {
+      $set .= ' ability_name_kana = :ability_name_kana';
+      $params += [':ability_name_kana' => $arr['ability_name_kana']];
     }
     
-    return $set;
+    return ['set' => $set, 'params' => $params];
   }
 
   //Value文の生成
-  // public function CreateValue($arr) {
-  //   $where = ' VALUE';
-  //   $params = [];
-    
-  //   if (!empty($arr['ability_cd'])) {
-  //     $where .= ' AND ability_cd LIKE :ability_cd';
-  //     $params += [':ability_cd' => $arr['ability_cd']];
-  //   }
-    
-  //   if (!empty($arr['ability_name'])) {
-  //     $where .= ' AND ability_name LIKE :ability_name';
-  //     $params += [':ability_name' => '%'.$arr['ability_name'].'%'];
-  //   }
+  public function CreateValue($arr) {
+    $value = ' ';
+    $params = [];
 
-  //   return ['value' => $where, 'params' => $params];
-  // }
+    if (!empty($arr['ability_cd']) && !empty($arr['ability_name']) && !empty($arr['ability_name_kana'])) {
+      $value = '(ability_cd, ability_name, ability_name_kana) VALUES (:ability_cd, :ability_name, , :ability_name_kana)';
+      $params += [':ability_cd' => $arr['ability_cd']];
+      $params += [':ability_name' => $arr['ability_name']];
+      $params += [':ability_name_kana' => $arr['ability_name_kana']];
+    } else if (!empty($arr['ability_cd']) && !empty($arr['ability_name'])) {
+      $value = '(ability_cd, ability_name) VALUES (:ability_cd, :ability_name)';
+      $params += [':ability_cd' => $arr['ability_cd']];
+      $params += [':ability_name' => $arr['ability_name']];
+    }
 
-  //データの数を取得
-  public function GetDataCount($arr) {
-    try {
-      $select = 'SELECT COUNT(*) FROM mst_ability';
-      $where = $this->CreateWhere($arr)['where'];
-      $params = $this->CreateWhere($arr)['params'];
-      $dbh = new PDO(DSN, USER, PASSWORD, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-      ]);
-      $sql = $select.$where;
-      $stmt = $dbh->prepare($sql);
-      foreach ($params as $key => $value) {
-        $stmt->bindValue($key, $value);
-      }
-      $stmt->execute();
-      return $stmt->fetchColumn();
-    } catch (PDOException $e) {
-      echo 'エラーメッセージ:「データが存在しません」: ' . $e->getMessage();
-    }
-  }
-  
-  //データ取得
-  public function GetData($arr) {
-    try {
-      $select = 'SELECT * FROM mst_ability';
-      $where = $this->CreateWhere($arr)['where'];
-      $limit = ' LIMIT 10';
-      $params = $this->CreateWhere($arr)['params'];
-      $dbh = new PDO(DSN, USER, PASSWORD, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-      ]);
-      $sql = $select.$where.$limit;
-      $stmt = $dbh->prepare($sql);
-      foreach ($params as $key => $value) {
-        $stmt->bindValue($key, $value);
-      }
-      $stmt->execute();
-      return $stmt->fetch();
-    } catch (PDOException $e) {
-      echo 'エラーメッセージ:「データが存在しません」: ' . $e->getMessage();
-    }
-  }
-
-  //データ取得
-  public function GetList($arr) {
-    try {
-      $select = 'SELECT * FROM mst_ability';
-      $where = $this->CreateWhere($arr)['where'];
-      $limit = ' LIMIT 10';
-      $params = $this->CreateWhere($arr)['params'];
-      $dbh = new PDO(DSN, USER, PASSWORD, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-      ]);
-      $sql = $select.$where.$limit;
-      $stmt = $dbh->prepare($sql);
-      foreach ($params as $key => $value) {
-        $stmt->bindValue($key, $value);
-      }
-      $stmt->execute();
-      return $stmt->fetchAll();
-    } catch (PDOException $e) {
-      echo 'エラーメッセージ:「データが存在しません」: ' . $e->getMessage();
-    }
+    return ['value' => $value, 'params' => $params];
   }
 
   //データ挿入
   public function Insert($arr) {
     try {
       $insert = 'INSERT INTO mst_ability';
-      $where = ' VALUES ('.$arr['ability_cd'].', '.$arr['ability_name'].', '.$arr['ability_name_kana'].')';
-      //$params = $this->CreateValue($arr)['params'];
+      $value = $this->CreateValue($arr)['value'];
+      $params = $this->CreateValue($arr)['params'];
       $dbh = new PDO(DSN, USER, PASSWORD, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       ]);
-      $sql = $insert.$where;
+      $sql = $insert.$value;
       $stmt = $dbh->prepare($sql);
-      // foreach ($params as $key => $value) {
-      //   $stmt->bindValue($key, $value);
-      // //}
-      //var_dump($sql);die;
+      foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+      } 
       $stmt->execute();
       return true;
     } catch (PDOException $e) {
@@ -147,18 +74,17 @@ class mst_ability {
   public function Update($arr) {
     try {
       $update = 'UPDATE mst_ability';
-      $set = $this->CreateSet($arr);
+      $set = $this->CreateSet($arr)['set'];
+      $params = $this->CreateSet($arr)['params'];
       $where = ' WHERE ability_cd = '.$arr['ability_cd'];
-      //$params = $this->CreateWhere($arr)['params'];
       $dbh = new PDO(DSN, USER, PASSWORD, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       ]);
       $sql = $update.$set.$where;
       $stmt = $dbh->prepare($sql);
-      // foreach ($params as $key => $value) {
-      //   $stmt->bindValue($key, $value);
-      // }
-      //var_dump($sql);die;
+      foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+      }
       $stmt->execute();
       return true;
     } catch (PDOException $e) {
@@ -180,7 +106,6 @@ class mst_ability {
       foreach ($params as $key => $value) {
         $stmt->bindValue($key, $value);
       }
-      //var_dump($sql);die;
       $stmt->execute();
       return true;
     } catch (PDOException $e) {

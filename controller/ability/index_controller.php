@@ -3,6 +3,7 @@ class index_controller extends controller {
 
   public function Load() {
     //モデルの読み込み
+    require_once "../../model/SQL.php";
     require_once "../../model/mst_ability.php";
     $mst_ability = new mst_ability;
 
@@ -20,7 +21,8 @@ class index_controller extends controller {
 
     //検索クリック時
     foreach ($H['search'] as $key => $value) {
-      $_SESSION['ability']['search'][$key] = filter_input(INPUT_POST, $key);
+      //値が入力されている場合は能力検索用セッションに格納する
+      $_SESSION['ability']['search'][$key] = $this->Set_Post_Params($key);
       
       //能力検索用セッションに検索条件がある場合は(1)能力コード、(2)能力名に値を格納する
       if (!empty($_SESSION['ability']['search'][$key])) {
@@ -36,13 +38,13 @@ class index_controller extends controller {
     }
 
     //検索用セッションに値がある場合は検索条件に含めて能力マスタを検索
-    $H['data'] = $mst_ability->GetList($H['search']);
+    $H['data'] = $mst_ability->GetList($H['search'], 'mst_ability');
 
     //能力マスタの総件数を取得
-    $H['count'] = $mst_ability->GetDataCount($H['search']);
+    $H['count'] = $mst_ability->GetListCount($H['search'], 'mst_ability');
 
     //現在のページ番号を取得して$_GETの値があったらそれを代入する
-    $H['p'] = filter_input(INPUT_GET, 'p');
+    $H['p'] = $this->Set_Get_Params('p');
 
     if (empty($H['p'])) {
       $H['p'] = 1;

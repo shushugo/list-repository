@@ -16,7 +16,7 @@ $H = $controller->Load();
 
 <body>
   <div>
-    <h1>能力一覧</h1>
+    <h1>能力登録</h1>
   </div>
 
   <?php if (!empty($H['err'])) { ?>
@@ -27,7 +27,12 @@ $H = $controller->Load();
     <div>
       <div>
         能力コード
-        <input type="text" name="ability_cd" value="<?= $H['register']['ability_cd'] ?>"><br>
+        <?php if ($H['c']) { ?>
+          <?= $H['register']['ability_cd'] ?>
+          <input type="hidden" name="ability_cd" value="<?= $H['register']['ability_cd'] ?>">
+        <?php } else { ?>
+          <input type="text" name="ability_cd" value="<?= $H['register']['ability_cd'] ?>">
+        <?php } ?>
         
         <?php if (!empty($H['err']['ability_cd'])) { 
           echo $H['err']['ability_cd'];
@@ -36,7 +41,7 @@ $H = $controller->Load();
 
       <div>
         能力名
-        <input type="text" name="ability_name" value="<?= $H['register']['ability_name'] ?>"><br>
+        <input type="text" name="ability_name" value="<?= $H['register']['ability_name'] ?>">
 
         <?php if (!empty($H['err']['ability_name'])) { 
           echo $H['err']['ability_name'];
@@ -45,7 +50,7 @@ $H = $controller->Load();
 
       <div>
         能力名カナ
-        <input type="text" name="ability_name_kana" value="<?= $H['register']['ability_name_kana'] ?>"><br>
+        <input type="text" name="ability_name_kana" value="<?= $H['register']['ability_name_kana'] ?>">
 
         <?php if (!empty($H['err']['ability_name_kana'])) { 
           echo $H['err']['ability_name_kana'];
