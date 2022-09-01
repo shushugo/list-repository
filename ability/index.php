@@ -1,10 +1,13 @@
 <?php
+
+require_once "../library/controller.php";
+
 class index_controller extends controller {
 
   public function Load() {
     //モデルの読み込み
-    require_once "../../model/SQL.php";
-    require_once "../../model/mst_ability.php";
+    require_once "../library/SQL.php";
+    require_once "model/mst_ability.php";
     $mst_ability = new mst_ability;
 
     session_start();
@@ -30,14 +33,14 @@ class index_controller extends controller {
         $this->h($H['search'][$key]);
       }
     }
-
+    
     //リセットクリック時、検索項目を初期化する
     if (isset($_POST['btn_reset'])) {
       foreach ($H['search'] as $key => $value) {
         unset($H['search'][$key]);
       }
     }
-
+    
     //検索用セッションに値がある場合は検索条件に含めて能力マスタを検索
     $H['data'] = $mst_ability->GetList($H['search'], 'mst_ability');
 
@@ -57,6 +60,16 @@ class index_controller extends controller {
 
     return $H;
   }
-
+  
 }
+
+$controller = new index_controller;
+$H = $controller->Load();
+
+  ob_start();
+  require_once "view/index_view.php";
+  $buffer = ob_get_contents();
+    ob_end_clean();
+    echo $buffer;
+
 ?>

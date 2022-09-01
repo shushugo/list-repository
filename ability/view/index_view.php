@@ -1,8 +1,9 @@
 <?php
-require_once "../../controller/controller.php";
-require_once "../../controller/ability/index_controller.php";
-$controller = new index_controller;
-$H = $controller->Load();
+//require_once "../../library/controller.php";
+//require_once "../index.php";
+//$controller = new index_controller;
+//$H = $controller->Load();
+
 ?>
 
 <!DOCTYPE html>
