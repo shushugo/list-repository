@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 //親クラスを読み込む
 require_once "../library/controller.php";
@@ -10,8 +11,6 @@ class edit_controller extends controller {
     require_once "../library/SQL.php";
     require_once "model/mst_ability.php";
     $mst_ability = new mst_ability;
-
-    session_start();
 
     $H = [
       'register' => [
@@ -29,8 +28,7 @@ class edit_controller extends controller {
 
       //データを取得できないと能力一覧画面に移動
       if (empty($H['register'])) {
-        header( "Location: index.php" );
-	      exit;
+        $this->Redirect("index.php");
       }
     }
 
@@ -55,12 +53,10 @@ class edit_controller extends controller {
 
         if ($H['c']) {
           //更新
-          header( "Location: conf.php?u=1" );
-          exit;
+          $this->Redirect("conf.php?u=1");
         } else {
           //追加
-          header( "Location: conf.php" );
-          exit;
+          $this->Redirect("conf.php");
         }
           
       }

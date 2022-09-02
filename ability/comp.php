@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 //親クラスを読み込む
 require_once "../library/controller.php";
@@ -10,8 +11,6 @@ class comp_controller extends controller {
     require_once "../library/SQL.php";
     require_once "model/mst_ability.php";
     $mst_ability = new mst_ability;
-
-    session_start();
 
     $delete_flg = $this->Set_Get_Params('d');
     $update_flg = $this->Set_Get_Params('u');
@@ -34,8 +33,7 @@ class comp_controller extends controller {
         $H['res'] = $mst_ability->Insert($data);
       }
     } else {
-      header( "Location: index.php" );
-	    exit;
+      $this->Redirect("index.php");
     }
 
     //能力登録用セッションを破棄する

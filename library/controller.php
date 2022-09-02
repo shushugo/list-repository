@@ -17,6 +17,13 @@ class controller {
     return $rtn;
   }
 
+  //リダイレクト処理
+  public function Redirect($url) {
+    //var_dump("Location: $url");die;
+    header( "Location: $url" );
+	  exit;
+  }
+
   //ページのカウント
   public function Get_Start_Num($p, $count) {
     $rtn = $p * 10 - 9;

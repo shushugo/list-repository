@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 //親クラスを読み込む
 require_once "../library/controller.php";
@@ -10,8 +11,6 @@ class conf_controller extends controller {
     require_once "../library/SQL.php";
     require_once "model/mst_ability.php";
     $mst_ability = new mst_ability;
-
-    session_start();
 
     $H = [
       'register' => [
@@ -30,8 +29,7 @@ class conf_controller extends controller {
 
       //データを取得できないと能力一覧画面に移動
       if (empty($H['register'])) {
-        header( "Location: index.php" );
-	      exit;
+        $this->Redirect("index.php");
       }
 
       //能力登録用セッションに取得したデータを格納する

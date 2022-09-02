@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 //親クラスを読み込む
 require_once "../library/controller.php";
@@ -10,8 +11,6 @@ class index_controller extends controller {
     require_once "../library/SQL.php";
     require_once "model/mst_ability.php";
     $mst_ability = new mst_ability;
-
-    session_start();
 
     $H = [
       'search' => [
