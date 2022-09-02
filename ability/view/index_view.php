@@ -1,11 +1,3 @@
-<?php
-//require_once "../../library/controller.php";
-//require_once "../index.php";
-//$controller = new index_controller;
-//$H = $controller->Load();
-
-?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>

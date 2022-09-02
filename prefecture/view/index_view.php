@@ -1,10 +1,3 @@
-<?php
-require_once "../../controller/controller.php";
-require_once "../../controller/prefectures/index_controller.php";
-$controller = new index_controller;
-$H = $controller->Load();
-?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>

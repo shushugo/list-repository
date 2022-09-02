@@ -1,10 +1,3 @@
-<?php
-require_once "../../controller/controller.php";
-require_once "../../controller/ability/conf_controller.php";
-$controller = new conf_controller;
-$H = $controller->Load();
-?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>

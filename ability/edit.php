@@ -1,10 +1,14 @@
 <?php
+
+//親クラスを読み込む
+require_once "../library/controller.php";
+
 class edit_controller extends controller {
 
   public function Load() {
     //モデルの読み込み
-    require_once "../../model/SQL.php";
-    require_once "../../model/mst_ability.php";
+    require_once "../library/SQL.php";
+    require_once "model/mst_ability.php";
     $mst_ability = new mst_ability;
 
     session_start();
@@ -97,4 +101,20 @@ class edit_controller extends controller {
   }
 
 }
+
+//edit_controllerクラスのインスタンス化
+$controller = new edit_controller;
+//edit_contorllerクラスのLoad関数を呼び出す
+$H = $controller->Load();
+
+//記録開始
+ob_start();
+//viewファイルを読み込む
+require_once "view/edit_view.php";
+//記録結果を$bufferに代入
+$buffer = ob_get_contents();
+//記録終了
+ob_end_clean();
+echo $buffer;
+
 ?>

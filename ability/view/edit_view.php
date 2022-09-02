@@ -1,10 +1,3 @@
-<?php
-require_once "../../controller/controller.php";
-require_once "../../controller/ability/edit_controller.php";
-$controller = new edit_controller;
-$H = $controller->Load();
-?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>

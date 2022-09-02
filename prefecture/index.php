@@ -1,10 +1,14 @@
 <?php
+
+//親クラスを読み込む
+require_once "../library/controller.php";
+
 class index_controller extends controller {
 
   public function Load() {
     //モデルの読み込み
-    require_once "../../model/SQL.php";
-    require_once "../../model/mst_prefectures.php";
+    require_once "../library/SQL.php";
+    require_once "model/mst_prefectures.php";
     $mst_prefectures = new mst_prefectures;
 
     session_start();
@@ -59,4 +63,20 @@ class index_controller extends controller {
   }
 
 }
+
+//index_controllerクラスのインスタンス化
+$controller = new index_controller;
+//index_contorllerクラスのLoad関数を呼び出す
+$H = $controller->Load();
+
+//記録開始
+ob_start();
+//viewファイルを読み込む
+require_once "view/index_view.php";
+//記録結果を$bufferに代入
+$buffer = ob_get_contents();
+//記録終了
+ob_end_clean();
+echo $buffer;
+
 ?>

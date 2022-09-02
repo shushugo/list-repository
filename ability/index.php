@@ -1,5 +1,6 @@
 <?php
 
+//親クラスを読み込む
 require_once "../library/controller.php";
 
 class index_controller extends controller {
@@ -63,13 +64,19 @@ class index_controller extends controller {
   
 }
 
+//index_controllerクラスのインスタンス化
 $controller = new index_controller;
+//index_contorllerクラスのLoad関数を呼び出す
 $H = $controller->Load();
 
-  ob_start();
-  require_once "view/index_view.php";
-  $buffer = ob_get_contents();
-    ob_end_clean();
-    echo $buffer;
+//記録開始
+ob_start();
+//viewファイルを読み込む
+require_once "view/index_view.php";
+//記録結果を$bufferに代入
+$buffer = ob_get_contents();
+//記録終了
+ob_end_clean();
+echo $buffer;
 
 ?>

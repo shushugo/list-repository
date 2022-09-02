@@ -1,10 +1,3 @@
-<?php
-require_once "../../controller/controller.php";
-require_once "../../controller/prefectures/comp_controller.php";
-$controller = new comp_controller;
-$H = $controller->Load();
-?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
