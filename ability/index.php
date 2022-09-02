@@ -30,7 +30,7 @@ class index_controller extends controller {
       //能力検索用セッションに検索条件がある場合は(1)能力コード、(2)能力名に値を格納する
       if (!empty($_SESSION['ability']['search'][$key])) {
         $H['search'][$key] = $_SESSION['ability']['search'][$key];
-        $this->h($H['search'][$key]);
+        //$this->h($H['search'][$key]);
       }
     }
     
@@ -40,12 +40,6 @@ class index_controller extends controller {
         unset($H['search'][$key]);
       }
     }
-    
-    //検索用セッションに値がある場合は検索条件に含めて能力マスタを検索
-    $H['data'] = $mst_ability->GetList($H['search'], 'mst_ability');
-
-    //能力マスタの総件数を取得
-    $H['count'] = $mst_ability->GetListCount($H['search'], 'mst_ability');
 
     //現在のページ番号を取得して$_GETの値があったらそれを代入する
     $H['p'] = $this->Set_Get_Params('p');
@@ -53,12 +47,21 @@ class index_controller extends controller {
     if (empty($H['p'])) {
       $H['p'] = 1;
     }
+    
+    //検索用セッションに値がある場合は検索条件に含めて能力マスタを検索
+    $H['data'] = $mst_ability->GetList($H['search'], $H['p'], 'mst_ability');
+
+    //能力マスタの総件数を取得
+    $H['count'] = $mst_ability->GetListCount($H['search'], 'mst_ability');
 
     $H['maxpage'] = ceil($H['count'] / 10);
     $H['small_num'] = $this->Get_Start_Num($H['p'], $H['count']);
     $H['max_num'] = $this->Get_Last_Num($H['p'], $H['count']);
 
-    return $H;
+    //pageMenu関数でペーシ用のファイルを呼び出す
+    $H['pagemenu'] = $this->pageMenu($H['p'], $H['maxpage']);
+
+    return $this->h($H);
   }
   
 }

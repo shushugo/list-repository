@@ -66,12 +66,13 @@ class SQL {
   }
 
   //データ取得
-  public function GetList($arr, $mst) {
+  public function GetList($arr, $p, $mst) {
     try {
       $select = 'SELECT * FROM '.$mst;
       $where = $this->CreateWhere($arr)['where'];
       $params = $this->CreateWhere($arr)['params'];
-      $limit = ' LIMIT 10';
+      $offset = 10 * ($p - 1);
+      $limit = ' LIMIT '.$offset.' ,10';
       $dbh = new PDO(DSN, USER, PASSWORD, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       ]);

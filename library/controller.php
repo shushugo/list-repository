@@ -1,9 +1,39 @@
 <?php
 class controller {
 
+  // public function h($data) {
+  //   if (is_array($data)) {
+  //     var_dump($data);var_dump(11111);
+  //     foreach ($data as $key => $value) {
+  //       if (is_array($value)) {
+  //         foreach ($value as $k => $v) {
+  //           var_dump($v);var_dump(11111);
+  //           htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
+  //         }
+  //       } else {
+  //         var_dump($value);var_dump(11111);
+  //         htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+  //       }
+  //     }
+  //   } else {
+  //     htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+  //   }
+  //   return $data;
+  // }
   public function h($data) {
-    //var_dump($data);
-    return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+    
+    if (is_array($data)) {
+      foreach ($data as $key => $value) {
+        if (is_array($value)) {
+          return array_map("h", $value);
+        } else {
+          htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+        }
+      }
+    } else {
+      htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+    }
+    return $data;
   }
 
   //$_POST、$_GETの値を取得する
@@ -34,7 +64,7 @@ class controller {
   }
 
   public function Get_Last_Num($p, $count) {
-    $rtn = $p * 10 + 1;
+    $rtn = $p * 10;
     if ($rtn > $count) {
       return $count;
     }
@@ -76,6 +106,20 @@ class controller {
     } else {
       return;
     }
+  }
+
+  public function pageMenu($p, $maxpage) {
+    //記録開始
+    ob_start();
+    //ファイルを読み込む
+    require_once "page.php";
+    $pagemenu = new page_menu;
+    $pagemenu->Load($p, $maxpage);
+    //記録結果を$bufferに代入
+    $buffer = ob_get_contents();
+    //記録終了
+    ob_end_clean();
+    return $buffer;
   }
 }
 ?>
