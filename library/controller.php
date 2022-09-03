@@ -1,39 +1,20 @@
 <?php
 class controller {
-
-  // public function h($data) {
-  //   if (is_array($data)) {
-  //     var_dump($data);var_dump(11111);
-  //     foreach ($data as $key => $value) {
-  //       if (is_array($value)) {
-  //         foreach ($value as $k => $v) {
-  //           var_dump($v);var_dump(11111);
-  //           htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
-  //         }
-  //       } else {
-  //         var_dump($value);var_dump(11111);
-  //         htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-  //       }
-  //     }
-  //   } else {
-  //     htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
-  //   }
-  //   return $data;
-  // }
-  public function h($data) {
-    
+  
+  public function arrayMapH($data) {
     if (is_array($data)) {
+      $arr = [];
       foreach ($data as $key => $value) {
-        if (is_array($value)) {
-          return array_map("h", $value);
-        } else {
-          htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-        }
+        $arr[$this->h($key)] = $value;
       }
+      return array_map(['controller', 'arrayMapH'], $arr);
     } else {
-      htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+       return $this->h($data);
     }
-    return $data;
+   }
+
+  public function h($data) {
+    return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
   }
 
   //$_POST、$_GETの値を取得する

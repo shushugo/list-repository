@@ -39,7 +39,7 @@ class comp_controller extends controller {
     //能力登録用セッションを破棄する
     unset($_SESSION['ability']['register']);
 
-    return $H;
+    return $this->arrayMapH($H);
   }
 
 }

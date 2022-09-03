@@ -61,7 +61,7 @@ class index_controller extends controller {
     //pageMenu関数でペーシ用のファイルを呼び出す
     $H['pagemenu'] = $this->pageMenu($H['p'], $H['maxpage']);
 
-    return $this->h($H);
+    return $this->arrayMapH($H);
   }
   
 }

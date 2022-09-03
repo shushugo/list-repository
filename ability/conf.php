@@ -45,7 +45,7 @@ class conf_controller extends controller {
       }
     }
 
-    return $H;
+    return $this->arrayMapH($H);
   }
 }
 
