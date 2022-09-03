@@ -58,10 +58,12 @@ class index_controller extends controller {
     $H['small_num'] = $this->Get_Start_Num($H['p'], $H['count']);
     $H['max_num'] = $this->Get_Last_Num($H['p'], $H['count']);
 
-    //pageMenu関数でペーシ用のファイルを呼び出す
-    $H['pagemenu'] = $this->pageMenu($H['p'], $H['maxpage']);
-
     return $this->arrayMapH($H);
+  }
+
+  public function PageLoad($p, $maxpage) {
+    //pageMenu関数でペーシ用のファイルを呼び出す
+    return $this->pageMenu($p, $maxpage);
   }
   
 }
@@ -70,6 +72,8 @@ class index_controller extends controller {
 $controller = new index_controller;
 //index_contorllerクラスのLoad関数を呼び出す
 $H = $controller->Load();
+
+$pagemenu = $controller->PageLoad($H['p'], $H['maxpage']);
 
 //記録開始
 ob_start();

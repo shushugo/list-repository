@@ -1,6 +1,6 @@
 <?php
 class controller {
-  
+
   public function arrayMapH($data) {
     if (is_array($data)) {
       $arr = [];
@@ -100,6 +100,7 @@ class controller {
     $buffer = ob_get_contents();
     //記録終了
     ob_end_clean();
+    //var_dump($buffer);die;
     return $buffer;
   }
 }

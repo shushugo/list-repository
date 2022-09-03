@@ -50,8 +50,8 @@
         </table>
       </div>
       
-      <?= $H['pagemenu'] ?>
-      
+      <?= $pagemenu ?>
+
     <?php } else { ?>
       「データが存在しません」
     <?php } ?>
