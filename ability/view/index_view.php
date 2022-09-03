@@ -27,7 +27,7 @@
       </div>
     </form>
     
-    <?php if ($H['data']) { ?>
+    <?php if (!empty($H['data'])) { ?>
       <?= $H['count'] ?>件中<?= $H['small_num'] ?>～<?= $H['max_num'] ?>
       
       <div>

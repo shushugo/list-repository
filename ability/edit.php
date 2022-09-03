@@ -23,7 +23,7 @@ class edit_controller extends controller {
     $H['c'] = $this->Set_Get_Params('c');
 
     //能力コードがある場合は能力マスタからデータを取得し、値を格納する(更新の場合)
-    if ($H['c']) {
+    if (isset($H['c'])) {
       $H['register'] = $mst_ability->GetData(['ability_cd' => $H['c']], 'mst_ability');
 
       //データを取得できないと能力一覧画面に移動
@@ -41,7 +41,7 @@ class edit_controller extends controller {
       //入力したデータ
       $H['data'][$key] = $this->Set_Post_Params($key);
     }
-
+    
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $H['err'] = $this->Validation($H['data']);
 

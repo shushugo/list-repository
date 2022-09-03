@@ -8,7 +8,7 @@
   </head>
   
   <body>
-    能力の<?= $H['crud'] ?>が<?= ($H['res']) ? '完了' : '失敗' ?>しました。<br>
+    能力の<?= $H['crud'] ?>が<?= (!empty($H['res'])) ? '完了' : '失敗' ?>しました。<br>
     
     <a href='index.php'>戻る</a>
   </body>

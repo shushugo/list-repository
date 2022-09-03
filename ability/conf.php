@@ -24,7 +24,7 @@ class conf_controller extends controller {
     $H['u'] = $this->Set_Get_Params('u');
 
     //能力コードがある場合は能力マスタからデータを取得し、値を格納する(削除)
-    if ($H['c']) {
+    if (isset($H['c'])) {
       $H['register'] = $mst_ability->GetData(['ability_cd' => $H['c']], 'mst_ability');
 
       //データを取得できないと能力一覧画面に移動

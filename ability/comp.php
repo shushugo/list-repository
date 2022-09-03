@@ -22,15 +22,15 @@ class comp_controller extends controller {
       if ($delete_flg) {
         //データ削除
         $H['crud'] = '削除';
-        $H['res'] = $mst_ability->Delete($data);
+        $H['res'] = $mst_ability->Delete($data, 'mst_ability');
       } else if ($update_flg) {
         //データ更新
         $H['crud'] = '更新';
-        $H['res'] = $mst_ability->Update($data);
+        $H['res'] = $mst_ability->Update($data, $data['ability_cd'], 'mst_ability');
       } else {
         //データ追加
         $H['crud'] = '追加';
-        $H['res'] = $mst_ability->Insert($data);
+        $H['res'] = $mst_ability->Insert($data, 'mst_ability');
       }
     } else {
       $this->Redirect("index.php");
