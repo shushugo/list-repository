@@ -12,18 +12,15 @@ class CompController extends Controller {
     require_once "model/mst_ability.php";
     $mst_ability = new MstAbility;
 
-    $delete_flg = $this->getGetParams('d');
-    $update_flg = $this->getGetParams('u');
-
     $data = $_SESSION['ability']['register'];
 
     //能力登録用セッションに値がある場合
     if ($data) {
-      if ($delete_flg) {
+      if ($this->getGetParams('d')) {
         //データ削除
         $H['crud'] = '削除';
         $H['res'] = $mst_ability->delete($data, 'mst_ability');
-      } else if ($update_flg) {
+      } else if ($this->getGetParams('u');) {
         //データ更新
         $H['crud'] = '更新';
         $H['res'] = $mst_ability->update($data, $data['ability_cd'], 'mst_ability');

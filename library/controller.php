@@ -53,6 +53,7 @@ class controller {
   }
 
   //入力チェック
+
   public function isRequired($data) {
     if (empty($data)) {
       $rtn = '入力してください。';

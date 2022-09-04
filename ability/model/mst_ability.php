@@ -1,6 +1,6 @@
 <?php 
 
-class MstAbility extends SQL {
+class MstAbility extends Sql {
 
   public $H = [
     'item' => [
