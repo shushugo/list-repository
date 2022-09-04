@@ -4,13 +4,13 @@ session_start();
 //親クラスを読み込む
 require_once "../library/controller.php";
 
-class conf_controller extends controller {
+class ConfController extends Controller {
 
-  public function Load() {
+  public function load() {
     //モデルの読み込み
     require_once "../library/SQL.php";
     require_once "model/mst_ability.php";
-    $mst_ability = new mst_ability;
+    $mst_ability = new MstAbility;
 
     $H = [
       'register' => [
@@ -20,8 +20,8 @@ class conf_controller extends controller {
       ]
     ];
 
-    $H['c'] = $this->Set_Get_Params('c');
-    $H['u'] = $this->Set_Get_Params('u');
+    $H['c'] = $this->getGetParams('c');
+    $H['u'] = $this->getGetParams('u');
 
     //能力コードがある場合は能力マスタからデータを取得し、値を格納する(削除)
     if (isset($H['c'])) {
@@ -29,7 +29,7 @@ class conf_controller extends controller {
 
       //データを取得できないと能力一覧画面に移動
       if (empty($H['register'])) {
-        $this->Redirect("index.php");
+        $this->redirect("index.php");
       }
 
       //能力登録用セッションに取得したデータを格納する
@@ -50,7 +50,7 @@ class conf_controller extends controller {
 }
 
 //conf_controllerクラスのインスタンス化
-$controller = new conf_controller;
+$controller = new ConfController;
 //conf_contorllerクラスのLoad関数を呼び出す
 $H = $controller->Load();
 

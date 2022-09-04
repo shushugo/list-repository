@@ -8,7 +8,7 @@ class SQL {
   }
 
   //Where文の生成
-  public function CreateWhere($arr) {
+  public function createWhere($arr) {
     $where = ' WHERE 1 = 1';
     $params = [];
     
@@ -23,7 +23,7 @@ class SQL {
   }
 
   //Value文の生成
-  public function CreateValue($arr) {
+  public function createValue($arr) {
     $value = '';
     $values = '';
     $param = '';
@@ -46,7 +46,7 @@ class SQL {
   }
 
   //更新の際のSET文を生成
-  public function CreateSet($arr) {
+  public function createSet($arr) {
     $set = ' SET ';
     $params = [];
     $value_key = [];
@@ -65,11 +65,11 @@ class SQL {
   }
 
   //データの数を取得
-  public function GetListCount($arr, $mst) {
+  public function getListCount($arr, $mst) {
     try {
       $select = 'SELECT COUNT(*) FROM '.$mst;
-      $where = $this->CreateWhere($arr)['where'];
-      $params = $this->CreateWhere($arr)['params'];
+      $where = $this->createWhere($arr)['where'];
+      $params = $this->createWhere($arr)['params'];
       $dbh = new PDO(DSN, USER, PASSWORD, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       ]);
@@ -86,12 +86,12 @@ class SQL {
   }
 
   //データ取得
-  public function GetData($arr, $mst) {
+  public function getData($arr, $mst) {
     try {
       $select = 'SELECT * FROM '.$mst;
-      $where = $this->CreateWhere($arr)['where'];
+      $where = $this->createWhere($arr)['where'];
       $limit = ' LIMIT 10';
-      $params = $this->CreateWhere($arr)['params'];
+      $params = $this->createWhere($arr)['params'];
       $dbh = new PDO(DSN, USER, PASSWORD, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       ]);
@@ -108,11 +108,11 @@ class SQL {
   }
 
   //データ取得
-  public function GetList($arr, $p, $mst) {
+  public function getList($arr, $p, $mst) {
     try {
       $select = 'SELECT * FROM '.$mst;
-      $where = $this->CreateWhere($arr)['where'];
-      $params = $this->CreateWhere($arr)['params'];
+      $where = $this->createWhere($arr)['where'];
+      $params = $this->createWhere($arr)['params'];
       $offset = 10 * ($p - 1);
       $limit = ' LIMIT '.$offset.' ,10';
       $dbh = new PDO(DSN, USER, PASSWORD, [
@@ -131,11 +131,11 @@ class SQL {
   }
 
   //データ挿入
-  public function Insert($arr, $mst) {
+  public function insert($arr, $mst) {
     try {
       $insert = 'INSERT INTO '.$mst;
-      $value = $this->CreateValue($arr)['value'];
-      $params = $this->CreateValue($arr)['params'];
+      $value = $this->createValue($arr)['value'];
+      $params = $this->createValue($arr)['params'];
       $dbh = new PDO(DSN, USER, PASSWORD, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       ]);
@@ -152,11 +152,11 @@ class SQL {
   }
 
   //データ更新
-  public function Update($arr, $key, $mst) {
+  public function update($arr, $key, $mst) {
     try {
       $update = 'UPDATE '.$mst;
-      $set = $this->CreateSet($arr)['set'];
-      $params = $this->CreateSet($arr)['params'];
+      $set = $this->createSet($arr)['set'];
+      $params = $this->createSet($arr)['params'];
       $where = ' WHERE ability_cd = '.$key;
       $dbh = new PDO(DSN, USER, PASSWORD, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -175,11 +175,11 @@ class SQL {
   }
 
   //データ削除
-  public function Delete($arr, $mst) {
+  public function delete($arr, $mst) {
     try {
       $delete = 'DELETE FROM '.$mst;
-      $where = $this->CreateWhere($arr)['where'];
-      $params = $this->CreateWhere($arr)['params'];
+      $where = $this->createWhere($arr)['where'];
+      $params = $this->createWhere($arr)['params'];
       $dbh = new PDO(DSN, USER, PASSWORD, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       ]);

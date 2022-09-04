@@ -1,6 +1,6 @@
 <?php 
 class page_menu {
-  public function Load($p, $maxpage) {
+  public function load($p, $maxpage) {
     if ($p != 1) {
       echo "<a href=\"index.php?p=".$p - 1 ."\">前のページ</a>";
     }

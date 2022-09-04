@@ -4,16 +4,16 @@ session_start();
 //親クラスを読み込む
 require_once "../library/controller.php";
 
-class comp_controller extends controller {
+class CompController extends Controller {
 
-  public function Load() {
+  public function load() {
     //モデルの読み込み
     require_once "../library/SQL.php";
     require_once "model/mst_ability.php";
-    $mst_ability = new mst_ability;
+    $mst_ability = new MstAbility;
 
-    $delete_flg = $this->Set_Get_Params('d');
-    $update_flg = $this->Set_Get_Params('u');
+    $delete_flg = $this->getGetParams('d');
+    $update_flg = $this->getGetParams('u');
 
     $data = $_SESSION['ability']['register'];
 
@@ -22,18 +22,18 @@ class comp_controller extends controller {
       if ($delete_flg) {
         //データ削除
         $H['crud'] = '削除';
-        $H['res'] = $mst_ability->Delete($data, 'mst_ability');
+        $H['res'] = $mst_ability->delete($data, 'mst_ability');
       } else if ($update_flg) {
         //データ更新
         $H['crud'] = '更新';
-        $H['res'] = $mst_ability->Update($data, $data['ability_cd'], 'mst_ability');
+        $H['res'] = $mst_ability->update($data, $data['ability_cd'], 'mst_ability');
       } else {
         //データ追加
         $H['crud'] = '追加';
-        $H['res'] = $mst_ability->Insert($data, 'mst_ability');
+        $H['res'] = $mst_ability->insert($data, 'mst_ability');
       }
     } else {
-      $this->Redirect("index.php");
+      $this->redirect("index.php");
     }
 
     //能力登録用セッションを破棄する
@@ -45,7 +45,7 @@ class comp_controller extends controller {
 }
 
 //comp_controllerクラスのインスタンス化
-$controller = new comp_controller;
+$controller = new CompController;
 //comp_contorllerクラスのLoad関数を呼び出す
 $H = $controller->Load();
 
