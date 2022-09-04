@@ -20,7 +20,7 @@ class CompController extends Controller {
         //データ削除
         $H['crud'] = '削除';
         $H['res'] = $mst_ability->delete($data, 'mst_ability');
-      } else if ($this->getGetParams('u');) {
+      } else if ($this->getGetParams('u')) {
         //データ更新
         $H['crud'] = '更新';
         $H['res'] = $mst_ability->update($data, $data['ability_cd'], 'mst_ability');

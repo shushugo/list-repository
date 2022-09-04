@@ -40,11 +40,17 @@ class EditController extends Controller {
 
       //入力したデータ
       $H['data'][$key] = $this->getPostParams($key);
+
+      //バリデーションでエラー出た後でも、フォームに値が格納されるように
+      if ($H['data'][$key]) {
+        $H['register'][$key] = $H['data'][$key];
+      }
+      
     }
     
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     require_once "../library/SQL.php";
-      $H['err'] = $this->validation($H['data'], $mst_ability);
+      $H['err'] = $this->validation($H['data'], $mst_ability, $H['c']);
 
       if (empty($H['err'])) {
         foreach ($H['register'] as $key =>$value)  {
@@ -65,14 +71,14 @@ class EditController extends Controller {
     return $this->arrayMapH($H);
   }
 
-  public function validation($data, $mst_ability) {
+  public function validation($data, $mst_ability, $c) {
     $err = [];
 
     $get_data = $mst_ability->getData($data, 'mst_ability');
     //能力コード
     if ($this->isRequired($data['ability_cd'])) {
       $err['ability_cd'] = $this->isRequired($data['ability_cd']);
-    } else if ($get_data) {
+    } else if ($get_data && !$c) {
       $err['ability_cd'] = 'その値は登録されています。';
     } else if ($this->isHalfAlphanumeric($data['ability_cd'])) {
       $err['ability_cd'] = $this->isHalfAlphanumeric($data['ability_cd']);

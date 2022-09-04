@@ -118,7 +118,7 @@ class Sql {
       $dbh = new PDO(DSN, USER, PASSWORD, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       ]);
-      $sql = $select.$where.$limit;
+      $sql = $select.$where.' ORDER BY 1 ASC'.$limit;
       $stmt = $dbh->prepare($sql);
       foreach ($params as $key => $value) {
         $stmt->bindValue($key, $value);
