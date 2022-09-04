@@ -1,17 +1,16 @@
 <?php
+session_start();
 
 //親クラスを読み込む
 require_once "../library/controller.php";
 
-class conf_controller extends controller {
+class ConfController extends Controller {
 
-  public function Load() {
+  public function load() {
     //モデルの読み込み
     require_once "../library/SQL.php";
     require_once "model/mst_prefectures.php";
-    $mst_prefectures = new mst_prefectures;
-
-    session_start();
+    $mst_prefectures = new MstPrefectures;
 
     $H = [
       'register' => [
@@ -21,17 +20,16 @@ class conf_controller extends controller {
       ]
     ];
 
-    $H['c'] = $this->Set_Get_Params('c');
-    $H['u'] = $this->Set_Get_Params('u');
+    $H['c'] = $this->getGetParams('c');
+    $H['u'] = $this->getGetParams('u');
 
     //都道府県コードがある場合は都道府県マスタからデータを取得し、値を格納する(削除)
-    if ($H['c']) {
-      $H['register'] = $mst_prefectures->GetData(['prefecture_cd' => $H['c']], 'mst_prefecture');
+    if (isset($H['c'])) {
+      $H['register'] = $mst_prefectures->getData(['prefecture_cd' => $H['c']], 'mst_prefecture');
 
       //データを取得できないと都道府県一覧画面に移動
       if (empty($H['register'])) {
-        header( "Location: index.php" );
-	      exit;
+        $this->redirect("index.php");
       }
 
       //都道府県登録用セッションに取得したデータを格納する
@@ -47,14 +45,14 @@ class conf_controller extends controller {
       }
     }
 
-    return $H;
+    return $this->arrayMapH($H);
   }
 }
 
 //conf_controllerクラスのインスタンス化
-$controller = new conf_controller;
+$controller = new ConfController;
 //conf_contorllerクラスのLoad関数を呼び出す
-$H = $controller->Load();
+$H = $controller->load();
 
 //記録開始
 ob_start();

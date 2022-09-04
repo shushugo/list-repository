@@ -1,55 +1,50 @@
 <?php
+session_start();
 
 //親クラスを読み込む
 require_once "../library/controller.php";
 
-class comp_controller extends controller {
+class CompController extends Controller {
 
-  public function Load() {
+  public function load() {
     //モデルの読み込み
     require_once "../library/SQL.php";
     require_once "model/mst_prefectures.php";
-    $mst_prefectures = new mst_prefectures;
-
-    session_start();
-
-    $delete_flg = $this->Set_Get_Params('d');
-    $update_flg = $this->Set_Get_Params('u');
+    $mst_prefectures = new MstPrefectures;
 
     $data = $_SESSION['prefecture']['register'];
 
     //都道府県登録用セッションに値がある場合
     if ($data) {
-      if ($delete_flg) {
+      if ($this->getGetParams('d')) {
         //データ削除
         $H['crud'] = '削除';
-        $H['res'] = $mst_prefectures->Delete($data);
-      } else if ($update_flg) {
+        $H['res'] = $mst_prefectures->delete($data, 'mst_prefecture');
+      } else if ($this->getGetParams('u')) {
         //データ更新
         $H['crud'] = '更新';
-        $H['res'] = $mst_prefectures->Update($data);
+        $H['res'] = $mst_prefectures->update($data, $data['prefecture_cd'], 'mst_prefecture');
       } else {
         //データ追加
         $H['crud'] = '追加';
-        $H['res'] = $mst_prefectures->Insert($data);
+        $H['res'] = $mst_prefectures->insert($data, 'mst_prefecture');
       }
     } else {
-      header( "Location: index.php" );
-	    exit;
+      $this->redirect("index.php");
     }
 
     //都道府県登録用セッションを破棄する
     unset($_SESSION['prefecture']['register']);
 
-    return $H;
+    return $this->arrayMapH($H);
   }
 
 }
 
 //comp_controllerクラスのインスタンス化
-$controller = new comp_controller;
+$controller = new CompController;
 //comp_contorllerクラスのLoad関数を呼び出す
-$H = $controller->Load();
+$H = $controller->load();
 
 //記録開始
 ob_start();

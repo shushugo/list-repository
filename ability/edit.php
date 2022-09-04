@@ -49,7 +49,7 @@ class EditController extends Controller {
     }
     
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    require_once "../library/SQL.php";
+    //require_once "../library/SQL.php";
       $H['err'] = $this->validation($H['data'], $mst_ability, $H['c']);
 
       if (empty($H['err'])) {
@@ -110,7 +110,7 @@ class EditController extends Controller {
 //edit_controllerクラスのインスタンス化
 $controller = new EditController;
 //edit_contorllerクラスのLoad関数を呼び出す
-$H = $controller->Load();
+$H = $controller->load();
 
 //記録開始
 ob_start();

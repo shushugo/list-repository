@@ -16,7 +16,7 @@
     エラーがあります
   <?php } ?>
 
-  <form method="POST">
+  <form action="<?= !empty($H['c']) ? 'edit.php?c=1' : 'edit.php'; ?>" method="POST">
     <div>
       <div>
         都道府県コード

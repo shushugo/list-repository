@@ -44,7 +44,7 @@ class CompController extends Controller {
 //comp_controllerクラスのインスタンス化
 $controller = new CompController;
 //comp_contorllerクラスのLoad関数を呼び出す
-$H = $controller->Load();
+$H = $controller->load();
 
 //記録開始
 ob_start();

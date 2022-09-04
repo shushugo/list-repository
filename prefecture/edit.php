@@ -1,17 +1,16 @@
 <?php
+session_start();
 
 //親クラスを読み込む
 require_once "../library/controller.php";
 
-class edit_controller extends controller {
+class EditController extends Controller {
 
-  public function Load() {
+  public function load() {
     //モデルの読み込み
     require_once "../library/SQL.php";
     require_once "model/mst_prefectures.php";
-    $mst_prefectures = new mst_prefectures;
-
-    session_start();
+    $mst_prefectures = new MstPrefectures;
 
     $H = [
       'register' => [
@@ -21,16 +20,15 @@ class edit_controller extends controller {
       ]
     ];
 
-    $H['c'] = $this->Set_Get_Params('c');
+    $H['c'] = $this->getGetParams('c');
 
     //都道府県コードがある場合は都道府県マスタからデータを取得し、値を格納する(更新の場合)
-    if ($H['c']) {
-      $H['register'] = $mst_prefectures->GetData(['prefecture_cd' => $H['c']], 'mst_prefecture');
+    if (isset($H['c'])) {
+      $H['register'] = $mst_prefectures->getData(['prefecture_cd' => $H['c']], 'mst_prefecture');
 
       //データを取得できないと都道府県一覧画面に移動
       if (empty($H['register'])) {
-        header( "Location: index.php" );
-	      exit;
+        $this->redirect("index.php");
       }
     }
 
@@ -41,12 +39,16 @@ class edit_controller extends controller {
       }
 
       //入力したデータ
-      $H['data'][$key] = $this->Set_Post_Params($key);
-      $this->h($H['data'][$key]);
+      $H['data'][$key] = $this->getPostParams($key);
+
+      //バリデーションでエラー出た後でも、フォームに値が格納されるように
+      if ($H['data'][$key]) {
+        $H['register'][$key] = $H['data'][$key];
+      }
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      $H['err'] = $this->Validation($H['data']);
+      $H['err'] = $this->Validation($H['data'], $mst_prefectures, $H['c']);
 
       if (empty($H['err'])) {
         foreach ($H['register'] as $key =>$value)  {
@@ -55,26 +57,27 @@ class edit_controller extends controller {
 
         if ($H['c']) {
           //更新
-          header( "Location: conf.php?u=1" );
-          exit;
+          $this->redirect("conf.php?u=1");
         } else {
           //追加
-          header( "Location: conf.php" );
-          exit;
+          $this->redirect("conf.php");
         }
           
       }
     }
 
-    return $H;
+    return $this->arrayMapH($H);
   }
 
-  public function Validation($data) {
+  public function Validation($data, $mst_prefectures, $c) {
     $err = [];
 
+    $get_data = $mst_prefectures->getData($data, 'mst_prefectures');
     //都道府県コード
     if ($this->IsRequired($data['prefecture_cd'])) {
       $err['prefecture_cd'] = $this->IsRequired($data['prefecture_cd']);
+    } else if ($get_data && !$c) {
+      $err['prefecture_cd'] = 'その値は登録されています。';
     } else if ($this->IsHalfAlphanumeric($data['prefecture_cd'])) {
       $err['prefecture_cd'] = $this->IsHalfAlphanumeric($data['prefecture_cd']);
     } else if ($this->IsMaxLength($data['prefecture_cd'], 2)) {
@@ -103,7 +106,7 @@ class edit_controller extends controller {
 }
 
 //edit_controllerクラスのインスタンス化
-$controller = new edit_controller;
+$controller = new EditController;
 //edit_contorllerクラスのLoad関数を呼び出す
 $H = $controller->Load();
 

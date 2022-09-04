@@ -157,7 +157,7 @@ class Sql {
       $update = 'UPDATE '.$mst;
       $set = $this->createSet($arr)['set'];
       $params = $this->createSet($arr)['params'];
-      $where = ' WHERE ability_cd = '.$key;
+      $where = ' WHERE '.array_keys($arr)[0].' = '.$key;
       $dbh = new PDO(DSN, USER, PASSWORD, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       ]);

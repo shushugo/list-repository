@@ -30,7 +30,6 @@ class IndexController extends Controller {
       //能力検索用セッションに検索条件がある場合は(1)能力コード、(2)能力名に値を格納する
       if (!empty($_SESSION['ability']['search'][$key])) {
         $H['search'][$key] = $_SESSION['ability']['search'][$key];
-        //$this->h($H['search'][$key]);
       }
     }
     
