@@ -20,11 +20,16 @@ class EditController extends Controller {
       ]
     ];
 
-    $H['c'] = $this->getGetParams('c');
+    //更新用のセッションがない場合セットする
+    if ($this->getGetParams('c')) {
+      $_SESSION['update'] = $this->getGetParams('c');
+    } else if (!isset($_SESSION['update'])) {
+      $_SESSION['update'] = '';
+    }
 
     //能力コードがある場合は能力マスタからデータを取得し、値を格納する(更新の場合)
-    if (isset($H['c'])) {
-      $H['register'] = $mst_ability->getData(['ability_cd' => $H['c']], 'mst_ability');
+    if (!empty($_SESSION['update'])) {
+      $H['register'] = $mst_ability->getData(['ability_cd' => $_SESSION['update']], 'mst_ability');
 
       //データを取得できないと能力一覧画面に移動
       if (empty($H['register'])) {
@@ -47,10 +52,10 @@ class EditController extends Controller {
       }
       
     }
-    
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    //require_once "../library/SQL.php";
-      $H['err'] = $this->validation($H['data'], $mst_ability, $H['c']);
+     // var_dump($H['data']);die;
+      $H['err'] = $this->validation($H['data'], $mst_ability, $_SESSION['update']);
 
       if (empty($H['err'])) {
         foreach ($H['register'] as $key =>$value)  {
@@ -74,11 +79,17 @@ class EditController extends Controller {
   public function validation($data, $mst_ability, $c) {
     $err = [];
 
-    $get_data = $mst_ability->getData($data, 'mst_ability');
+    //pkを元にデータ取得
+    $get_data = $mst_ability->getDataByPk($data['ability_cd'], 'ability_cd', 'mst_ability');
+    var_dump($get_data);
+    if (!empty($c)) {
+    // var_dump($c);die;
+    }
     //能力コード
     if ($this->isRequired($data['ability_cd'])) {
       $err['ability_cd'] = $this->isRequired($data['ability_cd']);
-    } else if ($get_data && !$c) {
+    } else if ($get_data && empty($c)) {
+      //empty($c)は更新の際にあるhiddenの値を除くため
       $err['ability_cd'] = 'その値は登録されています。';
     } else if ($this->isHalfAlphanumeric($data['ability_cd'])) {
       $err['ability_cd'] = $this->isHalfAlphanumeric($data['ability_cd']);

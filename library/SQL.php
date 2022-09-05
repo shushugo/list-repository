@@ -107,6 +107,29 @@ class Sql {
     }
   }
 
+  //pkを元にデータ取得
+  public function getDataByPk($pk, $pkname, $mst) {
+    try {
+      $select = 'SELECT * FROM '.$mst;
+      $where = ' WHERE '.$pkname.' LIKE :'.$pkname;
+      $params = [':'.$pkname => $pk];
+      $dbh = new PDO(DSN, USER, PASSWORD, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      ]);
+      $sql = $select.$where;
+      $stmt = $dbh->prepare($sql);
+      foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+      }
+      // var_dump($params);
+      // var_dump($sql);var_dump($pk);die;
+      $stmt->execute();
+      return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+      echo 'エラーメッセージ:「データが存在しません」: ' . $e->getMessage();
+    }
+  }
+
   //データ取得
   public function getList($arr, $p, $mst) {
     try {
@@ -123,6 +146,7 @@ class Sql {
       foreach ($params as $key => $value) {
         $stmt->bindValue($key, $value);
       }
+      // var_dump($sql);die;
       $stmt->execute();
       return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {

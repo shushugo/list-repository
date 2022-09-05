@@ -21,6 +21,8 @@ class IndexController extends Controller {
 
     //能力登録用のセッションを破棄する
     unset($_SESSION['ability']['register']);
+    //更新用のセッションを破棄する
+    unset($_SESSION['update']);
 
     //検索クリック時
     foreach ($H['search'] as $key => $value) {
