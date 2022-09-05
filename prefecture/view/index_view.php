@@ -22,7 +22,7 @@
     
     <div>
       <input type="submit" value="検索" name="btn_search">
-      <button type="submit" value="1" name="btn_reset">リセット</button>
+      <input type="button" value="リセット" name="btn_reset" onclick="location.href = 'index.php'">
       <a href="edit.php">追加</a>
     </div>
   </form>

@@ -32,13 +32,6 @@ class IndexController extends Controller {
         $H['search'][$key] = $_SESSION['ability']['search'][$key];
       }
     }
-    
-    //リセットクリック時、検索項目を初期化する
-    if (isset($_POST['btn_reset'])) {
-      foreach ($H['search'] as $key => $value) {
-        unset($H['search'][$key]);
-      }
-    }
 
     //現在のページ番号を取得して$_GETの値があったらそれを代入する
     $H['p'] = $this->getGetParams('p');
