@@ -101,8 +101,22 @@ class controller {
     $buffer = ob_get_contents();
     //記録終了
     ob_end_clean();
-    //var_dump($buffer);die;
     return $buffer;
+  }
+
+  public function buffer($file, $H, $pagemenu) {
+    //エスケープ処理
+    $H = $this->arrayMapH($H);
+    //記録開始
+    ob_start();
+    //viewファイルを読み込む
+    require_once "$file";
+    //記録結果を$bufferに代入
+    $buffer = ob_get_contents();
+    //記録終了
+    ob_end_clean();
+    
+    echo $buffer;
   }
 }
 ?>

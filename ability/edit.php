@@ -68,7 +68,7 @@ class EditController extends Controller {
       }
     }
 
-    return $this->arrayMapH($H);
+    $this->buffer('../ability/view/edit_view.php',$H, '');
   }
 
   public function validation($data, $mst_ability, $c) {
@@ -110,16 +110,6 @@ class EditController extends Controller {
 //edit_controllerクラスのインスタンス化
 $controller = new EditController;
 //edit_contorllerクラスのLoad関数を呼び出す
-$H = $controller->load();
-
-//記録開始
-ob_start();
-//viewファイルを読み込む
-require_once "view/edit_view.php";
-//記録結果を$bufferに代入
-$buffer = ob_get_contents();
-//記録終了
-ob_end_clean();
-echo $buffer;
+$controller->load();
 
 ?>

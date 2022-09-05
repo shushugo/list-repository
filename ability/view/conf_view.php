@@ -16,7 +16,7 @@
       能力コード
       <?= $H['register']['ability_cd'] ?><br>
       
-      能力名カナ
+      能力名
       <?= $H['register']['ability_name'] ?><br>
       
       能力名カナ

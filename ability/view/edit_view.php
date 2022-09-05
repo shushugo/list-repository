@@ -33,7 +33,7 @@
         </div>
         
         <div>
-          能力名カナ
+          能力名
           <input type="text" name="ability_name" value="<?= $H['register']['ability_name'] ?>">
           
           <?php if (!empty($H['err']['ability_name'])) { 

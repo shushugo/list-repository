@@ -45,23 +45,13 @@ class ConfController extends Controller {
       }
     }
 
-    return $this->arrayMapH($H);
+    $this->buffer('../ability/view/conf_view.php',$H, '');
   }
 }
 
 //conf_controllerクラスのインスタンス化
 $controller = new ConfController;
 //conf_contorllerクラスのLoad関数を呼び出す
-$H = $controller->Load();
-
-//記録開始
-ob_start();
-//viewファイルを読み込む
-require_once "view/conf_view.php";
-//記録結果を$bufferに代入
-$buffer = ob_get_contents();
-//記録終了
-ob_end_clean();
-echo $buffer;
+$controller->Load();
 
 ?>

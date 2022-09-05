@@ -16,7 +16,7 @@
       <div>
         能力コード
         <input type="text" name="ability_cd" value="<?= !empty($H['search']['ability_cd']) ? $H['search']['ability_cd'] : ''; ?>">
-        能力名カナ
+        能力名
         <input type="text"name="ability_name" value="<?= !empty($H['search']['ability_name']) ? $H['search']['ability_name'] : ''; ?>">
       </div>
       

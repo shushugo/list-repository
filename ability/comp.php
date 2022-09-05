@@ -36,7 +36,7 @@ class CompController extends Controller {
     //能力登録用セッションを破棄する
     unset($_SESSION['ability']['register']);
 
-    return $this->arrayMapH($H);
+    $this->buffer('../ability/view/comp_view.php',$H, '');
   }
 
 }
@@ -44,16 +44,6 @@ class CompController extends Controller {
 //comp_controllerクラスのインスタンス化
 $controller = new CompController;
 //comp_contorllerクラスのLoad関数を呼び出す
-$H = $controller->load();
-
-//記録開始
-ob_start();
-//viewファイルを読み込む
-require_once "view/comp_view.php";
-//記録結果を$bufferに代入
-$buffer = ob_get_contents();
-//記録終了
-ob_end_clean();
-echo $buffer;
+$controller->load();
 
 ?>

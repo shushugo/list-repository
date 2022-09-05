@@ -50,7 +50,9 @@ class IndexController extends Controller {
     $H['small_num'] = $this->getStartNum($H['p'], $H['count']);
     $H['max_num'] = $this->getLastNum($H['p'], $H['count']);
 
-    return $this->arrayMapH($H);
+    $pagemenu = $this->pageLoad($H['p'], $H['maxpage']);
+
+    $this->buffer('../ability/view/index_view.php',$H, $pagemenu);
   }
 
   public function pageLoad($p, $max_page) {
@@ -63,18 +65,6 @@ class IndexController extends Controller {
 //index_controllerクラスのインスタンス化
 $controller = new IndexController;
 //index_contorllerクラスのLoad関数を呼び出す
-$H = $controller->load();
-
-$pagemenu = $controller->pageLoad($H['p'], $H['maxpage']);
-
-//記録開始
-ob_start();
-//viewファイルを読み込む
-require_once "view/index_view.php";
-//記録結果を$bufferに代入
-$buffer = ob_get_contents();
-//記録終了
-ob_end_clean();
-echo $buffer;
+$controller->load();
 
 ?>
