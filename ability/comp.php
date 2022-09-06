@@ -35,6 +35,10 @@ class CompController extends Controller {
 
     //能力登録用セッションを破棄する
     unset($_SESSION['ability']['register']);
+    //更新用のセッションを破棄する
+    unset($_SESSION['update']);
+    //削除用のセッションを破棄する
+    unset($_SESSION['delete']);
 
     $this->buffer('../ability/view/comp_view.php',$H, '');
   }

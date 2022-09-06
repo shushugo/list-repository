@@ -54,7 +54,7 @@ class EditController extends Controller {
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-     // var_dump($H['data']);die;
+     //第三引数は1度エラー出ても更新ということを渡せるように
       $H['err'] = $this->validation($H['data'], $mst_ability, $_SESSION['update']);
 
       if (empty($H['err'])) {
@@ -62,7 +62,7 @@ class EditController extends Controller {
           $_SESSION['ability']['register'][$key] = $H['data'][$key];
         }
 
-        if ($H['c']) {
+        if (!empty($_SESSION['update'])) {
           //更新
           $this->redirect("conf.php?u=1");
         } else {
@@ -81,10 +81,6 @@ class EditController extends Controller {
 
     //pkを元にデータ取得
     $get_data = $mst_ability->getDataByPk($data['ability_cd'], 'ability_cd', 'mst_ability');
-    var_dump($get_data);
-    if (!empty($c)) {
-    // var_dump($c);die;
-    }
     //能力コード
     if ($this->isRequired($data['ability_cd'])) {
       $err['ability_cd'] = $this->isRequired($data['ability_cd']);

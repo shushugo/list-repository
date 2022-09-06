@@ -16,11 +16,11 @@
       エラーがあります
     <?php } ?>
     
-    <form action="<?= !empty($H['c']) ? 'edit.php?c=1' : 'edit.php'; ?>" method="POST">
+    <form action="<?= !empty($_SESSION['update']) ? 'edit.php?c='.$_SESSION['update'] : 'edit.php'; ?>" method="POST">
       <div>
         <div>
           能力コード
-          <?php if (!empty($H['c'])) { ?>
+          <?php if (!empty($_SESSION['update'])) { ?>
             <?= $H['register']['ability_cd'] ?>
             <input type="hidden" name="ability_cd" value="<?= $H['register']['ability_cd'] ?>">
           <?php } else { ?>

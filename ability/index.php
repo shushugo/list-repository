@@ -23,6 +23,8 @@ class IndexController extends Controller {
     unset($_SESSION['ability']['register']);
     //更新用のセッションを破棄する
     unset($_SESSION['update']);
+    //削除用のセッションを破棄する
+    unset($_SESSION['delete']);
 
     //検索クリック時
     foreach ($H['search'] as $key => $value) {
