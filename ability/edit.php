@@ -22,14 +22,14 @@ class EditController extends Controller {
 
     //更新用のセッションがない場合セットする
     if ($this->getGetParams('c')) {
-      $_SESSION['update'] = $this->getGetParams('c');
-    } else if (!isset($_SESSION['update'])) {
-      $_SESSION['update'] = '';
+      $_SESSION['ability']['update'] = $this->getGetParams('c');
+    } else if (!isset($_SESSION['ability']['update'])) {
+      $_SESSION['ability']['update'] = '';
     }
 
     //能力コードがある場合は能力マスタからデータを取得し、値を格納する(更新の場合)
-    if (!empty($_SESSION['update'])) {
-      $H['register'] = $mst_ability->getData(['ability_cd' => $_SESSION['update']], 'mst_ability');
+    if (!empty($_SESSION['ability']['update'])) {
+      $H['register'] = $mst_ability->getData(['ability_cd' => $_SESSION['ability']['update']], 'mst_ability');
 
       //データを取得できないと能力一覧画面に移動
       if (empty($H['register'])) {
@@ -54,15 +54,15 @@ class EditController extends Controller {
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-     //第三引数は1度エラー出ても更新ということを渡せるように
-      $H['err'] = $this->validation($H['data'], $mst_ability, $_SESSION['update']);
+      //第三引数は1度バリデーションでエラーが出ても更新ということを渡せるように
+      $H['err'] = $this->validation($H['data'], $mst_ability, $_SESSION['ability']['update']);
 
       if (empty($H['err'])) {
         foreach ($H['register'] as $key =>$value)  {
           $_SESSION['ability']['register'][$key] = $H['data'][$key];
         }
 
-        if (!empty($_SESSION['update'])) {
+        if (!empty($_SESSION['ability']['update'])) {
           //更新
           $this->redirect("conf.php?u=1");
         } else {

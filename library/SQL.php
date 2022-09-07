@@ -12,7 +12,7 @@ class Sql {
     $where = ' WHERE 1 = 1';
     $params = [];
     
-    foreach ($this->H['item'] as $key => $value) {
+    foreach ($arr as $key => $value) {
       if (!empty($arr[$key])) {
         $where .= ' AND '.$key.' LIKE :'.$key;
         $params += [':'.$key => $arr[$key]];
@@ -121,8 +121,6 @@ class Sql {
       foreach ($params as $key => $value) {
         $stmt->bindValue($key, $value);
       }
-      // var_dump($params);
-      // var_dump($sql);var_dump($pk);die;
       $stmt->execute();
       return $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {

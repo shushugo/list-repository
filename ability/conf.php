@@ -20,19 +20,16 @@ class ConfController extends Controller {
       ]
     ];
 
-    // $H['c'] = $this->getGetParams('c');
-    // $H['u'] = $this->getGetParams('u');
-
     //削除用のセッションがない場合セットする
     if ($this->getGetParams('c')) {
-      $_SESSION['delete'] = $this->getGetParams('c');
-    } else if (!isset($_SESSION['delete'])) {
-      $_SESSION['delete'] = '';
+      $_SESSION['ability']['delete'] = $this->getGetParams('c');
+    } else if (!isset($_SESSION['ability']['delete'])) {
+      $_SESSION['ability']['delete'] = '';
     }
 
     //能力コードがある場合は能力マスタからデータを取得し、値を格納する(削除)
-    if (!empty($_SESSION['delete'])) {
-      $H['register'] = $mst_ability->getData(['ability_cd' => $_SESSION['delete']], 'mst_ability');
+    if (!empty($_SESSION['ability']['delete'])) {
+      $H['register'] = $mst_ability->getData(['ability_cd' => $_SESSION['ability']['delete']], 'mst_ability');
 
       //データを取得できないと能力一覧画面に移動
       if (empty($H['register'])) {
