@@ -16,11 +16,11 @@
       エラーがあります
     <?php } ?>
     
-    <form action="<?= !empty($_SESSION['update']) ? 'edit.php?c='.$_SESSION['update'] : 'edit.php'; ?>" method="POST">
+    <form action="<?= !empty($H['update']) ? 'edit.php?c='.$H['update'] : 'edit.php'; ?>" method="POST">
       <div>
         <div>
           能力コード
-          <?php if (!empty($_SESSION['update'])) { ?>
+          <?php if (!empty($H['update'])) { ?>
             <?= $H['register']['ability_cd'] ?>
             <input type="hidden" name="ability_cd" value="<?= $H['register']['ability_cd'] ?>">
           <?php } else { ?>
@@ -50,8 +50,8 @@
           } ?>
         </div>
       </div>
-      
-      <a href="index.php">戻る</a>
+
+      <input type="button" value="戻る" name="btn_back" onclick="location.href = 'index.php'">
       <input type="submit" value="確認" name="btn_conf">
     </form>
   </body>

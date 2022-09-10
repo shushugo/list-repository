@@ -21,15 +21,17 @@ class ConfController extends Controller {
     ];
 
     //削除用のセッションがない場合セットする
-    if ($this->getGetParams('c')) {
-      $_SESSION['ability']['delete'] = $this->getGetParams('c');
-    } else if (!isset($_SESSION['ability']['delete'])) {
-      $_SESSION['ability']['delete'] = '';
-    }
+    $this->setSessionAbilityDelete($this->getGetParams('c'));
+
+    //能力更新のセッションの値を格納
+    $H['delete'] = $this->getSessionAbilityDelete();
+
+    //能力更新のセッションの値を格納
+    $H['update'] = $this->getSessionAbilityUpdate();
 
     //能力コードがある場合は能力マスタからデータを取得し、値を格納する(削除)
-    if (!empty($_SESSION['ability']['delete'])) {
-      $H['register'] = $mst_ability->getData(['ability_cd' => $_SESSION['ability']['delete']], 'mst_ability');
+    if (!empty($H['delete'])) {
+      $H['register'] = $mst_ability->getData(['ability_cd' => $H['delete']], 'mst_ability');
 
       //データを取得できないと能力一覧画面に移動
       if (empty($H['register'])) {
@@ -37,16 +39,14 @@ class ConfController extends Controller {
       }
 
       //能力登録用セッションに取得したデータを格納する
-      $_SESSION['ability']['register'] = $H['register'];
-
-      //戻るボタンの戻り先を能力一覧にする
+      $this->setSessionAbilityRegister('', $H['register']);
     }
 
     //能力登録セッションに値がある場合はその値を表示する
-    if (isset($_SESSION['ability']['register'])) {
-      foreach ($H['register'] as $key => $value) {
-        $H['register'][$key] = $_SESSION['ability']['register'][$key];
-      }
+    if ($this->getSessionAbilityRegister()) {
+      //foreach ($H['register'] as $key => $value) {
+        $H['register'] = $this->getSessionAbilityRegister();
+      //}
     }
     
     $this->buffer('../ability/view/conf_view.php',$H, '');

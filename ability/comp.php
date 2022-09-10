@@ -12,7 +12,7 @@ class CompController extends Controller {
     require_once "model/mst_ability.php";
     $mst_ability = new MstAbility;
 
-    $data = $_SESSION['ability']['register'];
+    $data = $this->getSessionAbilityRegister();
 
     //能力登録用セッションに値がある場合
     if ($data) {
@@ -33,12 +33,12 @@ class CompController extends Controller {
       $this->redirect("index.php");
     }
 
-    //能力登録用セッションを破棄する
-    unset($_SESSION['ability']['register']);
+    //能力登録用のセッションを破棄する
+    $this->clearSessionAbility('register');
     //更新用のセッションを破棄する
-    unset($_SESSION['ability']['update']);
+    $this->clearSessionAbility('update');
     //削除用のセッションを破棄する
-    unset($_SESSION['ability']['delete']);
+    $this->clearSessionAbility('delete');
 
     $this->buffer('../ability/view/comp_view.php',$H, '');
   }

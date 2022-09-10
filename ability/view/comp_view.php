@@ -10,6 +10,6 @@
   <body>
     能力の<?= $H['crud'] ?>が<?= (!empty($H['res'])) ? '完了' : '失敗' ?>しました。<br>
     
-    <a href='index.php'>戻る</a>
+    <input type="button" value="戻る" name="btn_back" onclick="location.href = 'index.php'">
   </body>
 </html>

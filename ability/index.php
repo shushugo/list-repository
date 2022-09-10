@@ -20,21 +20,19 @@ class IndexController extends Controller {
     ];
 
     //能力登録用のセッションを破棄する
-    unset($_SESSION['ability']['register']);
+    $this->clearSessionAbility('register');
     //更新用のセッションを破棄する
-    unset($_SESSION['ability']['update']);
+    $this->clearSessionAbility('update');
     //削除用のセッションを破棄する
-    unset($_SESSION['ability']['delete']);
+    $this->clearSessionAbility('delete');
 
     //検索クリック時
     foreach ($H['search'] as $key => $value) {
       //値が入力されている場合は能力検索用セッションに格納する
-      $_SESSION['ability']['search'][$key] = $this->getPostParams($key);
+      $this->setSessionAbilitySearch($key, $this->getPostParams($key));
       
       //能力検索用セッションに検索条件がある場合は(1)能力コード、(2)能力名に値を格納する
-      if (!empty($_SESSION['ability']['search'][$key])) {
-        $H['search'][$key] = $_SESSION['ability']['search'][$key];
-      }
+      $H['search'][$key] = $this->getSessionAbilitySearch($key);
     }
 
     //現在のページ番号を取得して$_GETの値があったらそれを代入する
