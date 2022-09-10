@@ -49,7 +49,6 @@ class EditController extends Controller {
       if ($H['data'][$key]) {
         $H['register'][$key] = $H['data'][$key];
       }
-      
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -59,7 +58,6 @@ class EditController extends Controller {
       if (empty($H['err'])) {
         foreach ($H['register'] as $key =>$value)  {
           $this->setSessionAbilityRegister($key, $H['data'][$key]);
-
         }
 
         if (!empty($H['update'])) {

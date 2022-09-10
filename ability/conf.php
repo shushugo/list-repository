@@ -44,9 +44,7 @@ class ConfController extends Controller {
 
     //能力登録セッションに値がある場合はその値を表示する
     if ($this->getSessionAbilityRegister()) {
-      //foreach ($H['register'] as $key => $value) {
-        $H['register'] = $this->getSessionAbilityRegister();
-      //}
+      $H['register'] = $this->getSessionAbilityRegister();
     }
     
     $this->buffer('../ability/view/conf_view.php',$H, '');

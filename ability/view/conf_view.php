@@ -25,16 +25,12 @@
 
     <?php if (!empty($H['delete'])) { ?>
       <input type="button" value="戻る" name="btn_back" onclick="location.href = 'index.php'">
-    <?php } else if (!empty($H['update'])){ ?>
-      <input type="button" value="戻る" name="btn_back" onclick="location.href = 'edit.php?c=<?= $H['update'] ?>'">
     <?php } else { ?>
       <input type="button" value="戻る" name="btn_insert" onclick="location.href = 'edit.php'">
     <?php } ?>
 
     <?php if (!empty($H['delete'])) { ?>
-      <input type="button" value="削除" name="btn_comp" onclick="location.href = 'comp.php?d=1'">
-    <?php } else if (!empty($H['update'])){ ?>
-      <input type="button" value="更新" name="btn_comp" onclick="location.href = 'comp.php?u=1'">
+      <input type="button" value="削除" name="btn_comp" onclick="location.href = 'comp.php'">
     <?php } else { ?>
       <input type="button" value="登録" name="btn_comp" onclick="location.href = 'comp.php'">
     <?php } ?>

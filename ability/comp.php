@@ -14,13 +14,19 @@ class CompController extends Controller {
 
     $data = $this->getSessionAbilityRegister();
 
+    //能力更新のセッションの値を格納
+    $H['delete'] = $this->getSessionAbilityDelete();
+
+    //能力更新のセッションの値を格納
+    $H['update'] = $this->getSessionAbilityUpdate();
+
     //能力登録用セッションに値がある場合
     if ($data) {
-      if ($this->getGetParams('d')) {
+      if ($H['delete']) {
         //データ削除
         $H['crud'] = '削除';
         $H['res'] = $mst_ability->delete($data, 'mst_ability');
-      } else if ($this->getGetParams('u')) {
+      } else if ($H['update']) {
         //データ更新
         $H['crud'] = '更新';
         $H['res'] = $mst_ability->update($data, $data['ability_cd'], 'mst_ability');
