@@ -21,10 +21,10 @@ class EditController extends Controller {
     ];
 
     //更新用のセッションがない場合セットする
-    $this->setSessionAbilityUpdate($this->getGetParams('c'));
+    $this->setSessionAbility('update', $this->getGetParams('c'));
 
     //能力更新のセッションの値を格納
-    $H['update'] = $this->getSessionAbilityUpdate();
+    $H['update'] = $this->getSessionAbility('update');
 
     //能力コードがある場合は能力マスタからデータを取得し、値を格納する(更新の場合)
     if (!empty($H['update'])) {
@@ -36,11 +36,12 @@ class EditController extends Controller {
       }
     }
 
+    //能力登録セッションに値がある場合は値を格納する
+    if ($this->getSessionAbility('register')) {
+      $H['register'] = $this->getSessionAbility('register');
+    }
+    
     foreach ($H['register'] as $key =>$value)  {
-      //能力登録セッションに値がある場合は値を格納する
-      if ($this->getSessionAbilityRegister()) {
-        $H['register'] = $this->getSessionAbilityRegister();
-      }
 
       //入力したデータ
       $H['data'][$key] = $this->getPostParams($key);
@@ -56,9 +57,9 @@ class EditController extends Controller {
       $H['err'] = $this->validation($H['data'], $mst_ability, $H['update']);
 
       if (empty($H['err'])) {
-        foreach ($H['register'] as $key =>$value)  {
-          $this->setSessionAbilityRegister($key, $H['data'][$key]);
-        }
+        //foreach ($H['register'] as $key =>$value)  {
+          $this->setSessionAbility('register', $H['data']);
+        //}
 
         if (!empty($H['update'])) {
           //更新

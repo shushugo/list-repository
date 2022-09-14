@@ -119,6 +119,8 @@ class controller {
     echo $buffer;
   }
 
+  //sessionに関する関数
+
   //能力に関するセッションを破棄する
   public function clearSessionAbility($key) {
     if (!empty($_SESSION['ability'][$key])) {
@@ -126,88 +128,23 @@ class controller {
     }
   }
 
-  //能力検索に関するセッションをセットする
-  public function setSessionAbilitySearch($key, $value) {
+  //能力に関するセッションをセットする
+  public function setSessionAbility($key, $value) {
     if (!empty($value)) {
-      $_SESSION['ability']['search'][$key] = $value;
-    } else {
-      $_SESSION['ability']['search'][$key] = '';
-    }
+      $_SESSION['ability'][$key] = $value;
+    } //else {
+      //$_SESSION['ability'][$key] = '';
+    //}
   }
 
-  //能力更新に関するセッションをセットする
-  public function setSessionAbilityUpdate($value) {
-    if (!empty($value)) {
-      $_SESSION['ability']['update'] = $value;
-    } else {
-      $_SESSION['ability']['update'] = '';
-    }
-  }
-
-  //能力更新に関するセッションをセットする
-  public function setSessionAbilityDelete($value) {
-    if (!empty($value)) {
-      $_SESSION['ability']['delete'] = $value;
-    } else {
-      $_SESSION['ability']['delete'] = '';
-    }
-  }
-
-  //能力登録に関するセッションをセットする
-  public function setSessionAbilityRegister($key, $value) {
-    if (empty($key)) {
-      if (!empty($value)) {
-        $_SESSION['ability']['register'] = $value;
-      } else {
-        $_SESSION['ability']['register'] = '';
-      }
-    } else {
-      if (!empty($value)) {
-        $_SESSION['ability']['register'][$key] = $value;
-      } else {
-        $_SESSION['ability']['register'][$key] = '';
-      }
-    }
-  }
-
-  //能力検索に関するセッションをゲットする
-  public function getSessionAbilitySearch($key) {
-    if (!empty($_SESSION['ability']['search'][$key])) {
-      return $_SESSION['ability']['search'][$key];
+  //能力に関するセッションをゲットする
+  public function getSessionAbility($key) {
+    if (!empty($_SESSION['ability'][$key])) {
+      return $_SESSION['ability'][$key];
     } else {
       return;
     }
   }
-
-  //能力更新に関するセッションをゲットする
-  public function getSessionAbilityUpdate() {
-    if (!empty($_SESSION['ability']['update'])) {
-      return $_SESSION['ability']['update'];
-    } else {
-      return;
-    }
-  }
-
-  //能力削除に関するセッションをゲットする
-  public function getSessionAbilityDelete() {
-    if (!empty($_SESSION['ability']['delete'])) {
-      return $_SESSION['ability']['delete'];
-    } else {
-      return;
-    }
-  }
-
-  //能力登録に関するセッションをゲットする
-  public function getSessionAbilityRegister() {
-    if (!empty($_SESSION['ability']['register'])) {
-      return $_SESSION['ability']['register'];
-    } else {
-      return;
-    }
-  }
-
-  
-
 
 }
 ?>

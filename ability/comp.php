@@ -12,13 +12,13 @@ class CompController extends Controller {
     require_once "model/mst_ability.php";
     $mst_ability = new MstAbility;
 
-    $data = $this->getSessionAbilityRegister();
+    $data = $this->getSessionAbility('register');
 
     //能力更新のセッションの値を格納
-    $H['delete'] = $this->getSessionAbilityDelete();
+    $H['delete'] = $this->getSessionAbility('delete');
 
     //能力更新のセッションの値を格納
-    $H['update'] = $this->getSessionAbilityUpdate();
+    $H['update'] = $this->getSessionAbility('update');
 
     //能力登録用セッションに値がある場合
     if ($data) {

@@ -28,12 +28,15 @@ class IndexController extends Controller {
 
     //検索クリック時
     foreach ($H['search'] as $key => $value) {
-      //値が入力されている場合は能力検索用セッションに格納する
-      $this->setSessionAbilitySearch($key, $this->getPostParams($key));
-      
-      //能力検索用セッションに検索条件がある場合は(1)能力コード、(2)能力名に値を格納する
-      $H['search'][$key] = $this->getSessionAbilitySearch($key);
+      //foreachで1つ1つのカラムにfilter_inputを行う
+      $posts[$key] = $this->getPostParams($key);
     }
+
+    //値が入力されている場合は能力検索用セッションに格納する
+    $this->setSessionAbility('search', $posts);
+
+    //能力検索用セッションに検索条件がある場合は(1)能力コード、(2)能力名に値を格納する
+    $H['search'] = $this->getSessionAbility('search');
 
     //現在のページ番号を取得して$_GETの値があったらそれを代入する
     $H['p'] = $this->getGetParams('p');

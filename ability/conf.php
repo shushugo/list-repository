@@ -21,13 +21,13 @@ class ConfController extends Controller {
     ];
 
     //削除用のセッションがない場合セットする
-    $this->setSessionAbilityDelete($this->getGetParams('c'));
+    $this->setSessionAbility('delete', $this->getGetParams('c'));
 
     //能力更新のセッションの値を格納
-    $H['delete'] = $this->getSessionAbilityDelete();
+    $H['delete'] = $this->getSessionAbility('delete');
 
     //能力更新のセッションの値を格納
-    $H['update'] = $this->getSessionAbilityUpdate();
+    $H['update'] = $this->getSessionAbility('update');
 
     //能力コードがある場合は能力マスタからデータを取得し、値を格納する(削除)
     if (!empty($H['delete'])) {
@@ -39,14 +39,14 @@ class ConfController extends Controller {
       }
 
       //能力登録用セッションに取得したデータを格納する
-      $this->setSessionAbilityRegister('', $H['register']);
+      $this->setSessionAbility('register', $H['register']);
     }
 
     //能力登録セッションに値がある場合はその値を表示する
-    if ($this->getSessionAbilityRegister()) {
-      $H['register'] = $this->getSessionAbilityRegister();
+    if ($this->getSessionAbility('register')) {
+      $H['register'] = $this->getSessionAbility('register');
     }
-    
+
     $this->buffer('../ability/view/conf_view.php',$H, '');
   }
 }
