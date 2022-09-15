@@ -13,9 +13,11 @@ class Sql {
     $params = [];
     
     foreach ($arr as $key => $value) {
-      if (!empty($arr[$key])) {
-        $where .= ' AND '.$key.' LIKE :'.$key;
-        $params += [':'.$key => $arr[$key]];
+      if (array_key_exists($key, $this->H['columns'])) {
+        if (!empty($arr[$key])) {
+          $where .= ' AND '.$key.' LIKE :'.$key;
+          $params += [':'.$key => $arr[$key]];
+        }
       }
     }
 
@@ -32,10 +34,12 @@ class Sql {
     $param_key = [];
 
     foreach ($arr as $k => $v) {
-      $value_key[] .= $k;
-      $param_key[] .= ':'.$k;
+      if (array_key_exists($k, $this->H['columns'])) {
+        $value_key[] .= $k;
+        $param_key[] .= ':'.$k;
       
-      $params += [':'.$k => $v];
+        $params += [':'.$k => $v];
+      }
     }
     $values .= implode(", ", $value_key);
     $param .= implode(", ", $param_key);
@@ -53,10 +57,12 @@ class Sql {
     $param_key = [];
 
     foreach ($arr as $key => $value) {
-      if(!empty($value)) {
-        $value_key[] .= $key.' = :'.$key;
-
-        $params += [':'.$key => $arr[$key]];
+      if (array_key_exists($key, $this->H['columns'])) {
+        if(!empty($value)) {
+          $value_key[] .= $key.' = :'.$key;
+  
+          $params += [':'.$key => $arr[$key]];
+        }
       }
     }
     $set .= implode(", ", $value_key);
@@ -65,9 +71,9 @@ class Sql {
   }
 
   //データの数を取得
-  public function getListCount($arr, $mst) {
+  public function getListCount($arr) {
     try {
-      $select = 'SELECT COUNT(*) FROM '.$mst;
+      $select = 'SELECT COUNT(*) FROM '.$this->table;
       $where = $this->createWhere($arr)['where'];
       $params = $this->createWhere($arr)['params'];
       $dbh = new PDO(DSN, USER, PASSWORD, [
@@ -86,9 +92,9 @@ class Sql {
   }
 
   //データ取得
-  public function getData($arr, $mst) {
+  public function getData($arr) {
     try {
-      $select = 'SELECT * FROM '.$mst;
+      $select = 'SELECT * FROM '.$this->table;
       $where = $this->createWhere($arr)['where'];
       $limit = ' LIMIT 10';
       $params = $this->createWhere($arr)['params'];
@@ -108,9 +114,9 @@ class Sql {
   }
 
   //pkを元にデータ取得
-  public function getDataByPk($pk, $pkname, $mst) {
+  public function getDataByPk($pk, $pkname) {
     try {
-      $select = 'SELECT * FROM '.$mst;
+      $select = 'SELECT * FROM '.$this->table;
       $where = ' WHERE '.$pkname.' LIKE :'.$pkname;
       $params = [':'.$pkname => $pk];
       $dbh = new PDO(DSN, USER, PASSWORD, [
@@ -129,9 +135,9 @@ class Sql {
   }
 
   //データ取得
-  public function getList($arr, $p, $mst) {
+  public function getList($arr, $p) {
     try {
-      $select = 'SELECT * FROM '.$mst;
+      $select = 'SELECT * FROM '.$this->table;
       $where = $this->createWhere($arr)['where'];
       $params = $this->createWhere($arr)['params'];
       $offset = 10 * ($p - 1);
@@ -153,9 +159,9 @@ class Sql {
   }
 
   //データ挿入
-  public function insert($arr, $mst) {
+  public function insert($arr) {
     try {
-      $insert = 'INSERT INTO '.$mst;
+      $insert = 'INSERT INTO '.$this->table;
       $value = $this->createValue($arr)['value'];
       $params = $this->createValue($arr)['params'];
       $dbh = new PDO(DSN, USER, PASSWORD, [
@@ -174,9 +180,9 @@ class Sql {
   }
 
   //データ更新
-  public function update($arr, $key, $mst) {
+  public function update($arr, $key) {
     try {
-      $update = 'UPDATE '.$mst;
+      $update = 'UPDATE '.$this->table;
       $set = $this->createSet($arr)['set'];
       $params = $this->createSet($arr)['params'];
       $where = ' WHERE '.array_keys($arr)[0].' = '.$key;
@@ -197,9 +203,9 @@ class Sql {
   }
 
   //データ削除
-  public function delete($arr, $mst) {
+  public function delete($arr) {
     try {
-      $delete = 'DELETE FROM '.$mst;
+      $delete = 'DELETE FROM '.$this->table;
       $where = $this->createWhere($arr)['where'];
       $params = $this->createWhere($arr)['params'];
       $dbh = new PDO(DSN, USER, PASSWORD, [

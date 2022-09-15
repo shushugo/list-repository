@@ -2,13 +2,15 @@
 
 class MstAbility extends Sql {
 
-  // public $H = [
-  //   'item' => [
-  //     'ability_cd' => '',
-  //     'ability_name' => '',
-  //     'ability_name_kana' => ''
-  //   ]
-  // ];
+  protected $table = 'mst_ability';
+
+  protected $H = [
+    'columns' => [
+      'ability_cd' => '',
+      'ability_name' => '',
+      'ability_name_kana' => ''
+    ]
+  ];
 }
 
 ?>
