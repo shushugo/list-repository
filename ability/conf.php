@@ -2,14 +2,14 @@
 session_start();
 
 //親クラスを読み込む
-require_once "../library/controller.php";
+require_once '../library/controller.php';
 
 class ConfController extends Controller {
 
   public function load() {
     //モデルの読み込み
-    require_once "../library/SQL.php";
-    require_once "model/mst_ability.php";
+    require_once '../library/SQL.php';
+    require_once 'model/mst_ability.php';
     $mst_ability = new MstAbility;
 
     $H = [
@@ -35,7 +35,7 @@ class ConfController extends Controller {
 
       //データを取得できないと能力一覧画面に移動
       if (empty($H['register'])) {
-        $this->redirect("index.php");
+        $this->redirect('index.php');
       }
 
       //能力登録用セッションに取得したデータを格納する
@@ -43,7 +43,7 @@ class ConfController extends Controller {
     }
 
     //能力登録セッションに値がある場合はその値を表示する
-    if ($this->getSessionAbility('register')) {
+    if ($this->isSetSessionAbility('register')) {
       $H['register'] = $this->getSessionAbility('register');
     }
 

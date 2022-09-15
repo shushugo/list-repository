@@ -1,5 +1,5 @@
 <?php
-class controller {
+class Controller {
 
   public function arrayMapH($data) {
     if (is_array($data)) {
@@ -95,7 +95,7 @@ class controller {
     ob_start();
     //ファイルを読み込む
     require_once "page.php";
-    $page_menu = new page_menu;
+    $page_menu = new PageMenu;
     $page_menu->load($p, $max_page);
     //記録結果を$bufferに代入
     $buffer = ob_get_contents();
@@ -123,26 +123,27 @@ class controller {
 
   //能力に関するセッションを破棄する
   public function clearSessionAbility($key) {
-    if (!empty($_SESSION['ability'][$key])) {
-      unset($_SESSION['ability'][$key]);
-    }
+    unset($_SESSION['ability'][$key]);
   }
 
   //能力に関するセッションをセットする
   public function setSessionAbility($key, $value) {
     if (!empty($value)) {
       $_SESSION['ability'][$key] = $value;
-    } //else {
-      //$_SESSION['ability'][$key] = '';
-    //}
+    }
+  }
+
+  //能力に関するセッションをセットする
+  public function isSetSessionAbility($key) {
+    if (isset($_SESSION['ability'][$key])) {
+      return 1;
+    } 
   }
 
   //能力に関するセッションをゲットする
   public function getSessionAbility($key) {
     if (!empty($_SESSION['ability'][$key])) {
       return $_SESSION['ability'][$key];
-    } else {
-      return;
     }
   }
 

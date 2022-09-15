@@ -2,14 +2,14 @@
 session_start();
 
 //親クラスを読み込む
-require_once "../library/controller.php";
+require_once '../library/controller.php';
 
 class EditController extends Controller {
 
   public function load() {
     //モデルの読み込み
-    require_once "../library/SQL.php";
-    require_once "model/mst_ability.php";
+    require_once '../library/SQL.php';
+    require_once 'model/mst_ability.php';
     $mst_ability = new MstAbility;
 
     $H = [
@@ -26,6 +26,11 @@ class EditController extends Controller {
     //能力更新のセッションの値を格納
     $H['update'] = $this->getSessionAbility('update');
 
+    //能力登録セッションに値がある場合は値を格納する
+    if ($this->isSetSessionAbility('register')) {
+      $H['register'] = $this->getSessionAbility('register');
+    }
+
     //能力コードがある場合は能力マスタからデータを取得し、値を格納する(更新の場合)
     if (!empty($H['update'])) {
       $H['register'] = $mst_ability->getData(['ability_cd' => $H['update']], 'mst_ability');
@@ -35,14 +40,8 @@ class EditController extends Controller {
         $this->redirect("index.php");
       }
     }
-
-    //能力登録セッションに値がある場合は値を格納する
-    if ($this->getSessionAbility('register')) {
-      $H['register'] = $this->getSessionAbility('register');
-    }
     
     foreach ($H['register'] as $key =>$value)  {
-
       //入力したデータ
       $H['data'][$key] = $this->getPostParams($key);
 
@@ -52,23 +51,20 @@ class EditController extends Controller {
       }
     }
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       //第三引数は1度バリデーションでエラーが出ても更新ということを渡せるように
       $H['err'] = $this->validation($H['data'], $mst_ability, $H['update']);
 
       if (empty($H['err'])) {
-        //foreach ($H['register'] as $key =>$value)  {
-          $this->setSessionAbility('register', $H['data']);
-        //}
+        $this->setSessionAbility('register', $H['data']);
 
         if (!empty($H['update'])) {
           //更新
-          $this->redirect("conf.php?u=1");
+          $this->redirect('conf.php?u=1');
         } else {
           //追加
-          $this->redirect("conf.php");
+          $this->redirect('conf.php');
         }
-          
       }
     }
 

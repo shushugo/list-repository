@@ -2,14 +2,14 @@
 session_start();
 
 //親クラスを読み込む
-require_once "../library/controller.php";
+require_once '../library/controller.php';
 
 class CompController extends Controller {
 
   public function load() {
     //モデルの読み込み
-    require_once "../library/SQL.php";
-    require_once "model/mst_ability.php";
+    require_once '../library/SQL.php';
+    require_once 'model/mst_ability.php';
     $mst_ability = new MstAbility;
 
     $data = $this->getSessionAbility('register');

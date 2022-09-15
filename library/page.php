@@ -1,5 +1,5 @@
 <?php 
-class page_menu {
+class PageMenu {
   public function load($p, $maxpage) {
       if ($p != 1) { 
 ?>

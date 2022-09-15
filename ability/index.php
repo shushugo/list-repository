@@ -2,14 +2,14 @@
 session_start();
 
 //親クラスを読み込む
-require_once "../library/controller.php";
+require_once '../library/controller.php';
 
 class IndexController extends Controller {
 
   public function load() {
     //モデルの読み込み
-    require_once "../library/SQL.php";
-    require_once "model/mst_ability.php";
+    require_once '../library/SQL.php';
+    require_once 'model/mst_ability.php';
     $mst_ability = new MstAbility;
 
     $H = [
@@ -29,11 +29,11 @@ class IndexController extends Controller {
     //検索クリック時
     foreach ($H['search'] as $key => $value) {
       //foreachで1つ1つのカラムにfilter_inputを行う
-      $posts[$key] = $this->getPostParams($key);
+      $H['data'][$key] = $this->getPostParams($key);
     }
 
     //値が入力されている場合は能力検索用セッションに格納する
-    $this->setSessionAbility('search', $posts);
+    $this->setSessionAbility('search', $H['data']);
 
     //能力検索用セッションに検索条件がある場合は(1)能力コード、(2)能力名に値を格納する
     $H['search'] = $this->getSessionAbility('search');
