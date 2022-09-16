@@ -46,10 +46,10 @@ class IndexController extends Controller {
     }
     
     //検索用セッションに値がある場合は検索条件に含めて能力マスタを検索
-    $H['data'] = $mst_ability->getList($H['search'], $H['p'], 'mst_ability');
+    $H['data'] = $mst_ability->getList($H['search'], $H['p']);
 
     //能力マスタの総件数を取得
-    $H['count'] = $mst_ability->getListCount($H['search'], 'mst_ability');
+    $H['count'] = $mst_ability->getListCount($H['search']);
 
     $H['maxpage'] = ceil($H['count'] / 10);
     $H['small_num'] = $this->getStartNum($H['p'], $H['count']);

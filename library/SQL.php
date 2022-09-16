@@ -175,7 +175,7 @@ class Sql {
       $stmt->execute();
       return true;
     } catch (PDOException $e) {
-      echo 'エラーメッセージ:「データが存在しません」: ' . $e->getMessage();
+      return 'エラーが発生しました: ' . $e->getMessage();
     }
   }
 
@@ -194,11 +194,10 @@ class Sql {
       foreach ($params as $key => $value) {
         $stmt->bindValue($key, $value);
       }
-      //var_dump($sql);die;
       $stmt->execute();
       return true;
     } catch (PDOException $e) {
-      echo 'エラーメッセージ:「データが存在しません」: ' . $e->getMessage();
+      return 'エラーが発生しました: ' . $e->getMessage();
     }
   }
 
@@ -219,7 +218,7 @@ class Sql {
       $stmt->execute();
       return true;
     } catch (PDOException $e) {
-      echo 'エラーメッセージ:「データが存在しません」: ' . $e->getMessage();
+      return 'エラーが発生しました: ' . $e->getMessage();
     }
   }
 

@@ -8,7 +8,11 @@
   </head>
   
   <body>
-    能力の<?= $H['crud'] ?>が<?= (!empty($H['res'])) ? '完了' : '失敗' ?>しました。<br>
+    <?php if ($H['res'] != 1) { ?>
+      <?= $H['res'] ?><br>
+    <?php } ?>
+
+    能力の<?= $H['crud'] ?>が<?= ($H['res'] == 1) ? '完了' : '失敗' ?>しました。<br>
     
     <input type="button" value="戻る" name="btn_back" onclick="location.href = 'index.php'">
   </body>

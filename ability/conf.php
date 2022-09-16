@@ -31,7 +31,7 @@ class ConfController extends Controller {
 
     //能力コードがある場合は能力マスタからデータを取得し、値を格納する(削除)
     if (!empty($H['delete'])) {
-      $H['register'] = $mst_ability->getData(['ability_cd' => $H['delete']], 'mst_ability');
+      $H['register'] = $mst_ability->getData(['ability_cd' => $H['delete']]);
 
       //データを取得できないと能力一覧画面に移動
       if (empty($H['register'])) {

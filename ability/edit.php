@@ -33,7 +33,7 @@ class EditController extends Controller {
 
     //能力コードがある場合は能力マスタからデータを取得し、値を格納する(更新の場合)
     if (!empty($H['update'])) {
-      $H['register'] = $mst_ability->getData(['ability_cd' => $H['update']], 'mst_ability');
+      $H['register'] = $mst_ability->getData(['ability_cd' => $H['update']]);
 
       //データを取得できないと能力一覧画面に移動
       if (empty($H['register'])) {
@@ -75,7 +75,7 @@ class EditController extends Controller {
     $err = [];
 
     //pkを元にデータ取得
-    $get_data = $mst_ability->getDataByPk($data['ability_cd'], 'ability_cd', 'mst_ability');
+    $get_data = $mst_ability->getDataByPk($data['ability_cd'], 'ability_cd');
     //能力コード
     if ($this->isRequired($data['ability_cd'])) {
       $err['ability_cd'] = $this->isRequired($data['ability_cd']);
