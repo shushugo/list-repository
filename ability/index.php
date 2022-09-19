@@ -27,10 +27,7 @@ class IndexController extends Controller {
     $this->clearSessionAbility('delete');
 
     //検索クリック時
-    foreach ($H['search'] as $key => $value) {
-      //foreachで1つ1つのカラムにfilter_inputを行う
-      $H['data'][$key] = $this->getPostParams($key);
-    }
+     $H['data'] = $this->getPostParams($H['search']);
 
     //値が入力されている場合は能力検索用セッションに格納する
     $this->setSessionAbility('search', $H['data']);

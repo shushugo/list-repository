@@ -18,8 +18,11 @@ class Controller {
   }
 
   //$_POST、$_GETの値を取得する
-  public function getPostParams($key) {
-    $rtn = filter_input(INPUT_POST, $key);
+  public function getPostParams($arr) {
+    $rtn = filter_input_array(INPUT_POST, $arr);
+    if (is_null($rtn)) {
+      return $key;
+    }
     return $rtn;
   }
 
@@ -30,7 +33,6 @@ class Controller {
 
   //リダイレクト処理
   public function redirect($url) {
-    //var_dump("Location: $url");die;
     header( "Location: $url" );
 	  exit;
   }
@@ -127,13 +129,13 @@ class Controller {
   }
 
   //能力に関するセッションをセットする
-  public function setSessionAbility($key, $value) {
-    if (!empty($value)) {
-      $_SESSION['ability'][$key] = $value;
+  public function setSessionAbility($key, $arr) {
+    if (!empty($arr)) {
+      $_SESSION['ability'][$key] = $arr;
     }
   }
 
-  //能力に関するセッションをセットする
+  //能力に関するセッションをセットされてるかどうか
   public function isSetSessionAbility($key) {
     if (isset($_SESSION['ability'][$key])) {
       return 1;
