@@ -30,9 +30,6 @@ class CompController extends Controller {
         //データ更新
         $H['crud'] = '更新';
         $H['res'] = $mst_ability->update($data, $data['ability_cd']);
-        //if ($H['res'] === true) {
-         //echo ($H['res']);
-        //}
       } else {
         //データ追加
         $H['crud'] = '追加';

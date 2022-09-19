@@ -17,11 +17,20 @@ class Controller {
     return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
   }
 
+  //POSTかどうか判定を行う
+  public function isPost() {
+    $rtn = false;
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $rtn = true;
+    }
+    return $rtn;
+  }
+
   //$_POST、$_GETの値を取得する
   public function getPostParams($arr) {
     $rtn = filter_input_array(INPUT_POST, $arr);
     if (is_null($rtn)) {
-      return $key;
+      return $arr;
     }
     return $rtn;
   }

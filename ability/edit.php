@@ -23,13 +23,8 @@ class EditController extends Controller {
     //更新用のセッションがない場合セットする
     $this->setSessionAbility('update', $this->getGetParams('c'));
 
-    //能力更新のセッションの値を格納
+    //能力更新のセッションの値を格納(更新のセッションがない場合、NULLを代入される)
     $H['update'] = $this->getSessionAbility('update');
-
-    //能力登録セッションに値がある場合は値を格納する
-    if ($this->isSetSessionAbility('register')) {
-      $H['register'] = $this->getSessionAbility('register');
-    }
 
     //能力コードがある場合は能力マスタからデータを取得し、値を格納する(更新の場合)
     if (!empty($H['update'])) {
@@ -40,19 +35,18 @@ class EditController extends Controller {
         $this->redirect("index.php");
       }
     }
-    
-    foreach ($H['register'] as $key =>$value)  {
-      //入力したデータ
-      $H['data'][$key] = $this->getPostParams($key);
 
-      //バリデーションでエラー出た後でも、フォームに値が格納されるように
-      if ($H['data'][$key]) {
-        $H['register'][$key] = $H['data'][$key];
-      }
+    //能力登録セッションに値がある場合は値を格納する
+    if ($this->isSetSessionAbility('register')) {
+      $H['register'] = $this->getSessionAbility('register');
     }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      //第三引数は1度バリデーションでエラーが出ても更新ということを渡せるように
+    $H['data'] = $this->getPostParams($H['register']);
+
+    $H['register'] = $H['data'];
+
+    if ($this->isPost()) {
+      //第三引数は1度バリデーションでエラーが出ても更新ということを渡せるように(更新以外NULLが渡される)
       $H['err'] = $this->validation($H['data'], $mst_ability, $H['update']);
 
       if (empty($H['err'])) {
