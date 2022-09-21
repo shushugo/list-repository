@@ -52,16 +52,11 @@ class IndexController extends Controller {
     $H['small_num'] = $this->getStartNum($H['p'], $H['count']);
     $H['max_num'] = $this->getLastNum($H['p'], $H['count']);
 
-    $pagemenu = $this->pageLoad($H['p'], $H['maxpage']);
+    //pageMenu関数でペーシ用のファイルを呼び出す
+    $pagemenu = $this->pageMenu($H['p'], $H['maxpage']);
 
     $this->buffer('../ability/view/index_view.php',$H, $pagemenu);
   }
-
-  public function pageLoad($p, $max_page) {
-    //pageMenu関数でペーシ用のファイルを呼び出す
-    return $this->pageMenu($p, $max_page);
-  }
-  
 }
 
 //index_controllerクラスのインスタンス化

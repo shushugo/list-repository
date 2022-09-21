@@ -13,7 +13,7 @@ class Sql {
     $params = [];
     
     foreach ($arr as $key => $value) {
-      if (array_key_exists($key, $this->H['columns'])) {
+      if (array_key_exists($key, $this->columns)) {
         if (!empty($arr[$key])) {
           $where .= ' AND '.$key.' LIKE :'.$key;
           $params += [':'.$key => $arr[$key]];
@@ -34,7 +34,7 @@ class Sql {
     $param_key = [];
 
     foreach ($arr as $k => $v) {
-      if (array_key_exists($k, $this->H['columns'])) {
+      if (array_key_exists($k, $this->columns)) {
         $value_key[] .= $k;
         $param_key[] .= ':'.$k;
       
@@ -57,7 +57,7 @@ class Sql {
     $param_key = [];
 
     foreach ($arr as $key => $value) {
-      if (array_key_exists($key, $this->H['columns'])) {
+      if (array_key_exists($key, $this->columns)) {
         if(!empty($value)) {
           $value_key[] .= $key.' = :'.$key;
   
