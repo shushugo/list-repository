@@ -114,11 +114,11 @@ class Sql {
   }
 
   //pkを元にデータ取得
-  public function getDataByPk($pk, $pkname) {
+  public function getDataByPk($pk, $pk_name) {
     try {
       $select = 'SELECT * FROM '.$this->table;
-      $where = ' WHERE '.$pkname.' LIKE :'.$pkname;
-      $params = [':'.$pkname => $pk];
+      $where = ' WHERE '.$pk_name.' LIKE :'.$pk_name;
+      $params = [':'.$pk_name => $pk];
       $dbh = new PDO(DSN, USER, PASSWORD, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       ]);
