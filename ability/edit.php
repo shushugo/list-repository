@@ -65,7 +65,7 @@ class EditController extends Controller {
     $this->buffer('../ability/view/edit_view.php',$H, '');
   }
 
-  public function validation($data, $mst_ability, $c) {
+  private function validation($data, $mst_ability, $c) {
     $err = [];
 
     //pkを元にデータ取得

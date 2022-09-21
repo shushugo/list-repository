@@ -48,14 +48,14 @@ class IndexController extends Controller {
     //能力マスタの総件数を取得
     $H['count'] = $mst_ability->getListCount($H['search']);
 
-    $H['maxpage'] = ceil($H['count'] / 10);
+    $H['max_page'] = ceil($H['count'] / 10);
     $H['small_num'] = $this->getStartNum($H['p'], $H['count']);
     $H['max_num'] = $this->getLastNum($H['p'], $H['count']);
 
      //pageMenu関数でペーシ用のファイルを呼び出す
-    $pagemenu = $this->pageMenu($H['p'], $H['maxpage']);
+    $page_menu = $this->pageMenu($H['p'], $H['max_page']);
 
-    $this->buffer('../ability/view/index_view.php',$H, $pagemenu);
+    $this->buffer('../ability/view/index_view.php',$H, $page_menu);
   }
   
 }

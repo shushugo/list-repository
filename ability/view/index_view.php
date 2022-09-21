@@ -50,7 +50,7 @@
         </table>
       </div>
       
-      <?= $pagemenu ?>
+      <?= $page_menu ?>
 
     <?php } else { ?>
       「データが存在しません」
