@@ -11,8 +11,7 @@ class EditController extends Controller {
     require_once '../library/SQL.php';
     require_once 'model/mst_prefectures.php';
     $mst_prfectures = new MstPrefectures;
-
-
+    
     $H = [
       'register' => [
         'prefecture_cd' => '',
