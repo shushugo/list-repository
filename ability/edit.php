@@ -45,10 +45,10 @@ class EditController extends Controller {
 
     if ($this->isPost()) {
       //第三引数は1度バリデーションでエラーが出ても更新ということを渡せるように(更新以外NULLが渡される)
-      $H['err'] = $this->validation($H['data'], $mst_ability, $H['update']);
+      $H['err'] = $this->validation($H['register'], $mst_ability, $H['update']);
 
       if (empty($H['err'])) {
-        $this->setSessionAbility('register', $H['data']);
+        $this->setSessionAbility('register', $H['register']);
 
         if (!empty($H['update'])) {
           //更新

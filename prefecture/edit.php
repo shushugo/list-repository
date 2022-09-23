@@ -45,10 +45,10 @@ class EditController extends Controller {
 
     if ($this->isPost()) {
       //第三引数は1度バリデーションでエラーが出ても更新ということを渡せるように(更新以外NULLが渡される)
-      $H['err'] = $this->validation($H['data'], $mst_prfectures, $H['update']);
+      $H['err'] = $this->validation($H['register'], $mst_prfectures, $H['update']);
 
       if (empty($H['err'])) {
-        $this->getSessionPrefecture('register', $H['data']);
+        $this->setSessionPrefecture('register', $H['register']);
 
         if (!empty($H['update'])) {
           //更新
@@ -74,7 +74,7 @@ class EditController extends Controller {
     } else if ($get_data && empty($c)) {
       //empty($c)は更新の際にあるhiddenの値を除くため
       $err['prefecture_cd'] = 'その値は登録されています。';
-    } else if ($this->isHalfAlphanumeric($data['ability_cd'])) {
+    } else if ($this->isHalfAlphanumeric($data['prefecture_cd'])) {
       $err['prefecture_cd'] = $this->isHalfAlphanumeric($data['prefecture_cd']);
     } else if ($this->isMaxLength($data['prefecture_cd'], 2)) {
       $err['prefecture_cd'] = $this->isMaxLength($data['prefecture_cd'], 2);
