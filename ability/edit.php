@@ -41,9 +41,7 @@ class EditController extends Controller {
       $H['register'] = $this->getSessionAbility('register');
     }
 
-    $H['data'] = $this->getPostParams($H['register']);
-
-    $H['register'] = $H['data'];
+    $H['register'] = $this->getPostParams($H['register']);
 
     if ($this->isPost()) {
       //第三引数は1度バリデーションでエラーが出ても更新ということを渡せるように(更新以外NULLが渡される)

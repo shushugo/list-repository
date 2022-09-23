@@ -27,13 +27,10 @@ class IndexController extends Controller {
     $this->clearSessionAbility('delete');
 
     //検索クリック時
-    $H['data'] = $this->getPostParams($H['search']);
+    $H['search'] = $this->getPostParams($H['search']);
 
     //値が入力されている場合は能力検索用セッションに格納する
-    $this->setSessionAbility('search', $H['data']);
-
-    //能力検索用セッションに検索条件がある場合は(1)能力コード、(2)能力名に値を格納する
-    $H['search'] = $this->getSessionAbility('search');
+    $this->setSessionAbility('search', $H['search']);
 
     //現在のページ番号を取得して$_GETの値があったらそれを代入する
     $H['p'] = $this->getGetParams('p');
