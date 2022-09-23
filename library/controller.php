@@ -137,10 +137,22 @@ class Controller {
     unset($_SESSION['ability'][$key]);
   }
 
+  //都道府県に関するセッションを破棄する
+  protected function clearSessionPrefecture($key) {
+    unset($_SESSION['prefecture'][$key]);
+  }
+
   //能力に関するセッションをセットする
   protected function setSessionAbility($key, $arr) {
     if (!empty($arr)) {
       $_SESSION['ability'][$key] = $arr;
+    }
+  }
+
+  //都道府県に関するセッションをセットする
+  protected function setSessionPrefecture($key, $arr) {
+    if (!empty($arr)) {
+      $_SESSION['prefecture'][$key] = $arr;
     }
   }
 
