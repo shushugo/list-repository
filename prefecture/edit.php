@@ -2,15 +2,16 @@
 session_start();
 
 //親クラスを読み込む
-require_once "../library/controller.php";
+require_once '../library/controller.php';
 
 class EditController extends Controller {
 
   public function load() {
     //モデルの読み込み
-    require_once "../library/SQL.php";
-    require_once "model/mst_prefectures.php";
-    $mst_prefectures = new MstPrefectures;
+    require_once '../library/SQL.php';
+    require_once 'model/mst_prefectures.php';
+    $mst_prfectures = new MstPrefectures;
+
 
     $H = [
       'register' => [
@@ -20,11 +21,15 @@ class EditController extends Controller {
       ]
     ];
 
-    $H['c'] = $this->getGetParams('c');
+    //更新用のセッションがない場合セットする
+    $this->setSessionPrefecture('update', $this->getGetParams('c'));
+
+    //都道府県更新のセッションの値を格納(更新のセッションがない場合、NULLを代入される)
+    $H['update'] = $this->getSessionPrefecture('update');
 
     //都道府県コードがある場合は都道府県マスタからデータを取得し、値を格納する(更新の場合)
-    if (isset($H['c'])) {
-      $H['register'] = $mst_prefectures->getData(['prefecture_cd' => $H['c']], 'mst_prefecture');
+    if (!empty($H['update'])) {
+      $H['register'] = $mst_prfectures->getData(['prefecture_cd' => $H['update']]);
 
       //データを取得できないと都道府県一覧画面に移動
       if (empty($H['register'])) {
@@ -32,71 +37,63 @@ class EditController extends Controller {
       }
     }
 
-    foreach ($H['register'] as $key =>$value)  {
-      //都道府県登録セッションに値がある場合は値を格納する
-      if (!empty($_SESSION['prefecture']['register'][$key])) {
-        $H['register'][$key] = $_SESSION['prefecture']['register'][$key];
-      }
-
-      //入力したデータ
-      $H['data'][$key] = $this->getPostParams($key);
-
-      //バリデーションでエラー出た後でも、フォームに値が格納されるように
-      if ($H['data'][$key]) {
-        $H['register'][$key] = $H['data'][$key];
-      }
+    //都道府県登録セッションに値がある場合は値を格納する
+    if ($this->isSetSessionPrefecture('register')) {
+      $H['register'] = $this->getSessionPrefecture('register');
     }
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      $H['err'] = $this->Validation($H['data'], $mst_prefectures, $H['c']);
+    $H['register'] = $this->getPostParams($H['register']);
+
+    if ($this->isPost()) {
+      //第三引数は1度バリデーションでエラーが出ても更新ということを渡せるように(更新以外NULLが渡される)
+      $H['err'] = $this->validation($H['data'], $mst_prfectures, $H['update']);
 
       if (empty($H['err'])) {
-        foreach ($H['register'] as $key =>$value)  {
-          $_SESSION['prefecture']['register'][$key] = $H['data'][$key];
-        }
+        $this->getSessionPrefecture('register', $H['data']);
 
-        if ($H['c']) {
+        if (!empty($H['update'])) {
           //更新
-          $this->redirect("conf.php?u=1");
+          $this->redirect('conf.php?u=1');
         } else {
           //追加
-          $this->redirect("conf.php");
+          $this->redirect('conf.php');
         }
-          
       }
     }
 
-    return $this->arrayMapH($H);
+    $this->buffer('../prefecture/view/edit_view.php',$H, '');
   }
 
-  public function Validation($data, $mst_prefectures, $c) {
+  private function validation($data, $mst_prfectures, $c) {
     $err = [];
 
-    $get_data = $mst_prefectures->getData($data, 'mst_prefectures');
+    //pkを元にデータ取得
+    $get_data = $mst_prfectures->getDataByPk($data['prefecture_cd'], 'prefecture_cd');
     //都道府県コード
-    if ($this->IsRequired($data['prefecture_cd'])) {
-      $err['prefecture_cd'] = $this->IsRequired($data['prefecture_cd']);
-    } else if ($get_data && !$c) {
+    if ($this->isRequired($data['prefecture_cd'])) {
+      $err['prefecture_cd'] = $this->isRequired($data['prefecture_cd']);
+    } else if ($get_data && empty($c)) {
+      //empty($c)は更新の際にあるhiddenの値を除くため
       $err['prefecture_cd'] = 'その値は登録されています。';
-    } else if ($this->IsHalfAlphanumeric($data['prefecture_cd'])) {
-      $err['prefecture_cd'] = $this->IsHalfAlphanumeric($data['prefecture_cd']);
-    } else if ($this->IsMaxLength($data['prefecture_cd'], 2)) {
-      $err['prefecture_cd'] = $this->IsMaxLength($data['prefecture_cd'], 2);
+    } else if ($this->isHalfAlphanumeric($data['ability_cd'])) {
+      $err['prefecture_cd'] = $this->isHalfAlphanumeric($data['prefecture_cd']);
+    } else if ($this->isMaxLength($data['prefecture_cd'], 2)) {
+      $err['prefecture_cd'] = $this->isMaxLength($data['prefecture_cd'], 2);
     }
 
     //都道府県名
-    if ($this->IsRequired($data['prefecture_name'])) {
-      $err['prefecture_name'] = $this->IsRequired($data['prefecture_name']);
-    } else if ($this->IsMaxLength($data['prefecture_name'], 20)) {
-      $err['prefecture_name'] = $this->IsMaxLength($data['prefecture_name'], 5);
+    if ($this->isRequired($data['prefecture_name'])) {
+      $err['prefecture_name'] = $this->isRequired($data['prefecture_name']);
+    } else if ($this->isMaxLength($data['prefecture_name'], 5)) {
+      $err['prefecture_name'] = $this->isMaxLength($data['prefecture_name'], 5);
     }
 
     //都道府県名カナ
     if (!empty($data['prefecture_name_kana'])) {
-      if ($this->IsMaxLength($data['prefecture_name_kana'], 20)) {
-        $err['prefecture_name_kana'] = $this->IsMaxLength($data['prefecture_name_kana'], 10);
-      } else if ($this->IsKana($data['prefecture_name_kana'])) {
-        $err['prefecture_name_kana'] = $this->IsKana($data['prefecture_name_kana']);
+      if ($this->isMaxLength($data['prefecture_name_kana'], 10)) {
+        $err['prefecture_name_kana'] = $this->isMaxLength($data['prefecture_name_kana'], 10);
+      } else if ($this->isKana($data['prefecture_name_kana'])) {
+        $err['prefecture_name_kana'] = $this->isKana($data['prefecture_name_kana']);
       }
     }
 
@@ -108,16 +105,6 @@ class EditController extends Controller {
 //edit_controllerクラスのインスタンス化
 $controller = new EditController;
 //edit_contorllerクラスのLoad関数を呼び出す
-$H = $controller->Load();
-
-//記録開始
-ob_start();
-//viewファイルを読み込む
-require_once "view/edit_view.php";
-//記録結果を$bufferに代入
-$buffer = ob_get_contents();
-//記録終了
-ob_end_clean();
-echo $buffer;
+$controller->load();
 
 ?>

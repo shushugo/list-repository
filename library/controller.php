@@ -163,10 +163,24 @@ class Controller {
     } 
   }
 
+  //都道府県に関するセッションをセットされてるかどうか
+  protected function isSetSessionPrefecture($key) {
+    if (isset($_SESSION['prefecture'][$key])) {
+      return 1;
+    } 
+  }
+
   //能力に関するセッションをゲットする
   protected function getSessionAbility($key) {
     if (!empty($_SESSION['ability'][$key])) {
       return $_SESSION['ability'][$key];
+    }
+  }
+
+  //都道府県に関するセッションをゲットする
+  protected function getSessionPrefecture($key) {
+    if (!empty($_SESSION['prefecture'][$key])) {
+      return $_SESSION['prefecture'][$key];
     }
   }
 
