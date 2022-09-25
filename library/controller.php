@@ -142,6 +142,11 @@ class Controller {
     unset($_SESSION['prefecture'][$key]);
   }
 
+  //プレイヤーに関するセッションを破棄する
+  protected function clearSessionPlayer($key) {
+    unset($_SESSION['player'][$key]);
+  }
+
   //能力に関するセッションをセットする
   protected function setSessionAbility($key, $arr) {
     if (!empty($arr)) {
@@ -153,6 +158,13 @@ class Controller {
   protected function setSessionPrefecture($key, $arr) {
     if (!empty($arr)) {
       $_SESSION['prefecture'][$key] = $arr;
+    }
+  }
+
+  //プレイヤーに関するセッションをセットする
+  protected function setSessionPlayer($key, $arr) {
+    if (!empty($arr)) {
+      $_SESSION['player'][$key] = $arr;
     }
   }
 

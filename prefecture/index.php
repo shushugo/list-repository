@@ -14,8 +14,8 @@ class IndexController extends Controller {
 
     $H = [
       'search' => [
-        'prfecture_cd' => '',
-        'prfecture_name' => ''
+        'prefecture_cd' => '',
+        'prefecture_name' => ''
       ]
     ];
 
