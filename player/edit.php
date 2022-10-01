@@ -16,8 +16,12 @@ class EditController extends Controller {
       'register' => [
         'player_id' => '',
         'player_name' => '',
+        'player_name_kana' => '',
         'sex_div' => '',
         'prefecture_cd' => '',
+        'player_age' => '',
+        'player_password' => '',
+        'player_note' => '',
         'ability_cd' => ''
       ]
     ];

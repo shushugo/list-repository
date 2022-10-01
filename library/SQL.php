@@ -143,7 +143,6 @@ class Sql {
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       ]);
       $sql = $select.$where.' ORDER BY 1 ASC'.$limit;
-      var_dump($sql);
       $stmt = $dbh->prepare($sql);
       foreach ($params as $key => $value) {
         $stmt->bindValue($key, $value);

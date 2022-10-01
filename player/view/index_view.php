@@ -58,7 +58,7 @@
             <th>選手名</th>
             <th>性別</th>
             <th>年齢</th>
-            <th>能力</th>
+            <!-- <th>能力</th> -->
             <th>更新</th>
             <th>削除</th>
           </tr>
@@ -69,7 +69,7 @@
               <th><?= $H['data'][$key]['player_name'] ?></th>
               <th><?= $H['data'][$key]['sex_div'] ?></th>
               <th><?= $H['data'][$key]['player_age'] ?></th>
-              <th><?= $H['data'][$key]['ability_cd'] ?></th>
+              <!-- <th><?= $H['data'][$key]['ability_cd'] ?></th> -->
               <th><a href="edit.php?c=<?= $H['data'][$key]['prefecture_cd'] ?>">更新</a></th>
               <th><a href="conf.php?c=<?= $H['data'][$key]['prefecture_cd'] ?>">削除</a></th>
             </tr>
