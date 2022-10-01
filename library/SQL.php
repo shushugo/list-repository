@@ -1,10 +1,7 @@
 <?php 
 class Sql {
   function __construct() {
-    //定数
-    define('DSN' , 'mysql:dbname=test;host=localhost;charset=utf8mb4');
-    define('USER' , 'root');
-    define('PASSWORD' , '');
+    require_once 'define.php';
   }
 
   //Where文の生成
@@ -146,10 +143,27 @@ class Sql {
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       ]);
       $sql = $select.$where.' ORDER BY 1 ASC'.$limit;
+      var_dump($sql);
       $stmt = $dbh->prepare($sql);
       foreach ($params as $key => $value) {
         $stmt->bindValue($key, $value);
       }
+      $stmt->execute();
+      return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+      return 'エラーが発生しました: ' . $e->getMessage();
+    }
+  }
+
+  //プルダウン用のデータを取得する
+  public function getPullList() {
+    try {
+      $select = 'SELECT * FROM '.$this->table;
+      $dbh = new PDO(DSN, USER, PASSWORD, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      ]);
+      $sql = $select;
+      $stmt = $dbh->prepare($sql);
       $stmt->execute();
       return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {

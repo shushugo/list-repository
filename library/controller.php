@@ -182,6 +182,13 @@ class Controller {
     } 
   }
 
+  //プレイヤーに関するセッションをセットされてるかどうか
+  protected function isSetSessionPlayer($key) {
+    if (isset($_SESSION['player'][$key])) {
+      return 1;
+    } 
+  }
+
   //能力に関するセッションをゲットする
   protected function getSessionAbility($key) {
     if (!empty($_SESSION['ability'][$key])) {
@@ -193,6 +200,13 @@ class Controller {
   protected function getSessionPrefecture($key) {
     if (!empty($_SESSION['prefecture'][$key])) {
       return $_SESSION['prefecture'][$key];
+    }
+  }
+
+  //プレイヤーに関するセッションをゲットする
+  protected function getSessionPlayer($key) {
+    if (!empty($_SESSION['player'][$key])) {
+      return $_SESSION['player'][$key];
     }
   }
 

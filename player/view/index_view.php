@@ -28,12 +28,16 @@
         
         都道府県
         <select name="prefecture_cd">
-          <option></option>
+          <?php foreach ($H['prefecture_list'] as $key => $value) { ?>
+            <option value="<?php $value['prefecture_cd'] ?>"><?php echo $value['prefecture_name'] ?></option>
+          <?php } ?>
         </select>
 
         能力
         <select name="ability_cd">
-          <option></option>
+        <?php foreach ($H['ability_list'] as $key => $value) { ?>
+            <option value="<?php $value['ability_cd'] ?>"><?php echo $value['ability_name'] ?></option>
+          <?php } ?>
         </select>
       </div>
       
@@ -64,7 +68,7 @@
               <th><?= $H['data'][$key]['player_id'] ?></th>
               <th><?= $H['data'][$key]['player_name'] ?></th>
               <th><?= $H['data'][$key]['sex_div'] ?></th>
-              <th><?= $H['data'][$key]['player_birthday'] ?></th>
+              <th><?= $H['data'][$key]['player_age'] ?></th>
               <th><?= $H['data'][$key]['ability_cd'] ?></th>
               <th><a href="edit.php?c=<?= $H['data'][$key]['prefecture_cd'] ?>">更新</a></th>
               <th><a href="conf.php?c=<?= $H['data'][$key]['prefecture_cd'] ?>">削除</a></th>

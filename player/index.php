@@ -10,7 +10,11 @@ class IndexController extends Controller {
     //モデルの読み込み
     require_once '../library/SQL.php';
     require_once 'model/mst_player.php';
+    require_once '../prefecture/model/mst_prefectures.php';
+    require_once '../ability/model/mst_ability.php';
     $mst_player = new MstPlayer;
+    $mst_prefecture = new MstPrefectures;
+    $mst_ability = new MstAbility;
 
     $H = [
       'search' => [
@@ -47,6 +51,12 @@ class IndexController extends Controller {
 
     //プレイヤーマスタの総件数を取得
     $H['count'] = $mst_player->getListCount($H['search']);
+
+    //都道府県のプルダウン用のデータを取得
+    $H['prefecture_list'] = $mst_prefecture->getPullList();
+
+    //能力のプルダウン用のデータを取得
+    $H['ability_list'] = $mst_ability->getPullList();
 
     $H['max_page'] = ceil($H['count'] / 10);
     $H['small_num'] = $this->getStartNum($H['p'], $H['count']);
