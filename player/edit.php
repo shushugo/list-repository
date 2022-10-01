@@ -73,7 +73,7 @@ class EditController extends Controller {
     $err = [];
 
     //pkを元にデータ取得
-    $get_data = $mst_player->getDataByPk($data['player_id'], 'ability_cd');
+    $get_data = $mst_player->getDataByPk($data['player_id'], 'player_id');
     //プレイヤーID
     if ($this->isRequired($data['player_id'])) {
       $err['player_id'] = $this->isRequired($data['player_id']);
