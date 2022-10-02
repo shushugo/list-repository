@@ -10,7 +10,11 @@ class ConfController extends Controller {
     //モデルの読み込み
     require_once '../library/SQL.php';
     require_once 'model/mst_player.php';
+    require_once '../prefecture/model/mst_prefectures.php';
+    require_once '../ability/model/mst_ability.php';
     $mst_player = new MstPlayer;
+    $mst_prefecture = new MstPrefectures;
+    $mst_ability = new MstAbility;
     
     $H = [
       'register' => [
@@ -53,6 +57,12 @@ class ConfController extends Controller {
     if ($this->isSetSessionPlayer('register')) {
       $H['register'] = $this->getSessionPlayer('register');
     }
+
+    //都道府県コードから都道府県名を取得する
+    $H['register']['prefecture_name'] = $mst_prefecture->getDataByPk($H['register']['prefecture_cd'], 'prefecture_cd')['prefecture_name'];
+
+    //能力コードから能力名を取得す
+    $H['register']['ability_name'] = $mst_ability->getDataByPk($H['register']['ability_cd'], 'ability_cd')['ability_name'];
 
     $this->buffer('../player/view/conf_view.php',$H, '');
   }

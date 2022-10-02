@@ -23,10 +23,17 @@
       <?= $H['register']['player_name_kana'] ?><br>
 
       性別
-      <?= $H['register']['sex_div'] ?><br>
+      <?php if ($H['register']['sex_div'] == 1) { ?>
+        <?= '男' ?><br>
+      <?php } else if ($H['register']['sex_div'] == 2) { ?>
+        <?= '女' ?><br>
+      <?php } ?>
 
       都道府県
-      <?= $H['register']['prefecture_cd'] ?><br>
+      <?= $H['register']['prefecture_name'] ?><br>
+
+      能力
+      <?= $H['register']['ability_name'] ?><br>
 
       年齢
       <?= $H['register']['player_age'] ?><br>

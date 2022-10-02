@@ -21,10 +21,6 @@
       </div>
 
       <div>
-      性別
-        <input type="radio"name="sex_div" value="<?= !empty($H['search']['player_name']) ? $H['search']['player_name'] : ''; ?>">全て
-        <input type="radio"name="sex_div" value="<?= !empty($H['search']['player_name']) ? $H['search']['player_name'] : ''; ?>">男
-        <input type="radio"name="sex_div" value="<?= !empty($H['search']['player_name']) ? $H['search']['player_name'] : ''; ?>">女
         
         都道府県
         <select name="prefecture_cd">
@@ -58,7 +54,7 @@
             <th>選手名</th>
             <th>性別</th>
             <th>年齢</th>
-            <!-- <th>能力</th> -->
+            <th>能力コード</th>
             <th>更新</th>
             <th>削除</th>
           </tr>
@@ -67,11 +63,17 @@
             <tr>
               <th><?= $H['data'][$key]['player_id'] ?></th>
               <th><?= $H['data'][$key]['player_name'] ?></th>
-              <th><?= $H['data'][$key]['sex_div'] ?></th>
+              <th>
+                <?php if ($H['data'][$key]['sex_div'] == 1) { ?>
+                  <?= '男' ?>
+                <?php } else if ($H['data'][$key]['sex_div'] == 2) { ?>
+                  <?= '女' ?>
+                <?php } ?>
+              </th>
               <th><?= $H['data'][$key]['player_age'] ?></th>
-              <!-- <th><?= $H['data'][$key]['ability_cd'] ?></th> -->
-              <th><a href="edit.php?c=<?= $H['data'][$key]['prefecture_cd'] ?>">更新</a></th>
-              <th><a href="conf.php?c=<?= $H['data'][$key]['prefecture_cd'] ?>">削除</a></th>
+              <th><?= $H['data'][$key]['ability_cd'] ?></th>
+              <th><a href="edit.php?c=<?= $H['data'][$key]['player_id'] ?>">更新</a></th>
+              <th><a href="conf.php?c=<?= $H['data'][$key]['player_id'] ?>">削除</a></th>
             </tr>
           <?php } ?>
         </table>

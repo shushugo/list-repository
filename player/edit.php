@@ -10,7 +10,11 @@ class EditController extends Controller {
     //モデルの読み込み
     require_once '../library/SQL.php';
     require_once 'model/mst_player.php';
+    require_once '../prefecture/model/mst_prefectures.php';
+    require_once '../ability/model/mst_ability.php';
     $mst_player = new MstPlayer;
+    $mst_prefecture = new MstPrefectures;
+    $mst_ability = new MstAbility;
 
     $H = [
       'register' => [
@@ -41,6 +45,12 @@ class EditController extends Controller {
         $this->redirect("index.php");
       }
     }
+
+    //都道府県のプルダウン用のデータを取得
+    $H['prefecture_list'] = $mst_prefecture->getPullList();
+
+    //能力のプルダウン用のデータを取得
+    $H['ability_list'] = $mst_ability->getPullList();
 
     //プレイヤー登録セッションに値がある場合は値を格納する
     if ($this->isSetSessionPlayer('register')) {

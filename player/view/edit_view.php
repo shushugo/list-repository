@@ -52,7 +52,17 @@
 
         <div>
           性別
-          <input type="text" name="sex_div" value="<?= $H['register']['sex_div'] ?>">
+          <?php if ($H['register']['sex_div'] == 1) { ?>
+            <input type="radio"name="sex_div" value="1" checked>男
+          <?php } else { ?>
+            <input type="radio"name="sex_div" value="1">男
+          <?php } ?>
+          
+          <?php if ($H['register']['sex_div'] == 2) { ?>
+            <input type="radio"name="sex_div" value="2" checked>女
+          <?php } else { ?>
+            <input type="radio"name="sex_div" value="2">女
+          <?php } ?>
           
           <?php if (!empty($H['err']['sex_div'])) {
             echo $H['err']['sex_div'];
@@ -61,7 +71,32 @@
 
         <div>
           都道府県
-          <input type="text" name="prefecture_cd" value="<?= $H['register']['prefecture_cd'] ?>">
+          <select name="prefecture_cd">
+            <?php foreach ($H['prefecture_list'] as $key => $value) { ?>
+              <?php if ($H['register']['prefecture_cd'] == $value['prefecture_cd']) { ?>
+                <option value="<?php echo $value['prefecture_cd'] ?>" selected><?php echo $value['prefecture_name'] ?></option>
+              <?php } else { ?>
+                <option value="<?php echo $value['prefecture_cd'] ?>"><?php echo $value['prefecture_name'] ?></option>
+              <?php } ?>
+            <?php } ?>
+          </select>
+          
+          <?php if (!empty($H['err']['prefecture_cd'])) {
+            echo $H['err']['prefecture_cd'];
+          } ?>
+        </div>
+
+        <div>
+          能力
+          <select name="ability_cd">
+            <?php foreach ($H['ability_list'] as $key => $value) { ?>
+              <?php if ($H['register']['ability_cd'] == $value['ability_cd']) { ?>
+                <option value="<?php echo $value['ability_cd'] ?>" selected><?php echo $value['ability_name'] ?></option>
+              <?php } else { ?>
+                <option value="<?php echo $value['ability_cd'] ?>"><?php echo $value['ability_name'] ?></option>
+              <?php } ?>
+              <?php } ?>
+          </select>
           
           <?php if (!empty($H['err']['prefecture_cd'])) {
             echo $H['err']['prefecture_cd'];

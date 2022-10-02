@@ -10,9 +10,11 @@ class MstPlayer extends SQL {
     'player_name_kana' => '',
     'sex_div' => '',
     'prefecture_cd' => '',
-    'player_birthday' => '',
+    'ability_cd' => '',
+    'player_age' => '',
     'player_password' => '',
-    'player_note' => ''
+    'player_note' => '',
+    'insert_at' => ''
   ];
 }
 
