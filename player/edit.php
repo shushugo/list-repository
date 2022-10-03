@@ -108,6 +108,13 @@ class EditController extends Controller {
       $err['sex_div'] = $this->isRequired($data['sex_div']);
     }
 
+    //パスワード
+    if ($this->isRequired($data['player_password'])) {
+      $err['player_password'] = $this->isRequired($data['player_password']);
+    } else if ($this->isMaxLength($data['player_password'], 50)) {
+      $err['player_password'] = $this->isMaxLength($data['player_password'], 50);
+    }
+
     return $err;
   }
 

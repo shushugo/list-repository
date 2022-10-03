@@ -189,6 +189,13 @@ class Controller {
     } 
   }
 
+  //ログインに関するセッションをセットされてるかどうか
+  protected function isSetSessionLogin() {
+    if (isset($_SESSION['login'])) {
+      return 1;
+    } 
+  }
+
   //能力に関するセッションをゲットする
   protected function getSessionAbility($key) {
     if (!empty($_SESSION['ability'][$key])) {

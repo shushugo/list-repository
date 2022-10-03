@@ -19,23 +19,6 @@
         選手名
         <input type="text"name="player_name" value="<?= !empty($H['search']['player_name']) ? $H['search']['player_name'] : ''; ?>">
       </div>
-
-      <div>
-        
-        都道府県
-        <select name="prefecture_cd">
-          <?php foreach ($H['prefecture_list'] as $key => $value) { ?>
-            <option value="<?php $value['prefecture_cd'] ?>"><?php echo $value['prefecture_name'] ?></option>
-          <?php } ?>
-        </select>
-
-        能力
-        <select name="ability_cd">
-        <?php foreach ($H['ability_list'] as $key => $value) { ?>
-            <option value="<?php $value['ability_cd'] ?>"><?php echo $value['ability_name'] ?></option>
-          <?php } ?>
-        </select>
-      </div>
       
       <div>
         <input type="submit" value="検索" name="btn_search">
