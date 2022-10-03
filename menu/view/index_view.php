@@ -11,7 +11,7 @@
     <h1>メニュー</h1>
 
     <div>
-       <input type="button" value="選手" name="btn_reset" onclick="location.href = '../palyer/index.php'">
+       <input type="button" value="選手" name="btn_reset" onclick="location.href = '../player/index.php'">
     </div>
 
     <div>
