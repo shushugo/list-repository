@@ -154,6 +154,14 @@ class Controller {
     unset($_SESSION['player']);
   }
 
+  //全てのセッションを破棄する
+  protected function clearSessionAll() {
+    unset($_SESSION['ability']);
+    unset($_SESSION['prefecture']);
+    unset($_SESSION['player']);
+    unset($_SESSION['login']);
+  }
+
   //能力に関するセッションをセットする
   protected function setSessionAbility($key, $arr) {
     if (!empty($arr)) {
