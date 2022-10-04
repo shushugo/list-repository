@@ -183,6 +183,13 @@ class Controller {
     }
   }
 
+  //ログインに関するセッションをセットする
+  protected function setSessionLogin($arr) {
+    if (!empty($arr)) {
+      $_SESSION['login'] = $arr;
+    }
+  }
+
   //能力に関するセッションをセットされてるかどうか
   protected function isSetSessionAbility($key) {
     if (isset($_SESSION['ability'][$key])) {

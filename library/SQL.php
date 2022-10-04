@@ -99,6 +99,8 @@ class Sql {
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       ]);
       $sql = $select.$where.$limit;
+      // var_dump($params);
+      // var_dump($sql);die;
       $stmt = $dbh->prepare($sql);
       foreach ($params as $key => $value) {
         $stmt->bindValue($key, $value);

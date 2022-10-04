@@ -13,7 +13,7 @@
     </div>
     
     <?php if (!empty($H['err'])) { ?>
-      エラーがあります
+      選手ID又はパスワードが違います。
     <?php } ?>
     
     <form action="login.php" method="POST">
@@ -21,19 +21,11 @@
         <div>
           選手ID
           <input type="text" name="player_id" value="">
-          
-          <?php if (!empty($H['err']['player_id'])) { 
-            echo $H['err']['player_id'];
-          } ?>
         </div>
 
         <div>
           パスワード
           <input type="text" name="player_password" value="">
-          
-          <?php if (!empty($H['err']['player_password'])) {
-            echo $H['err']['player_password'];
-          } ?>
         </div>
       </div>
 
