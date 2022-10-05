@@ -9,14 +9,17 @@ class IndexController extends Controller {
   public function load() {
 
     //ログイン用セッションに値がないときはログイン画面に飛ぶ
-    // if (!($this->isSetSessionLogin())) {
-    //   $this->redirect('index.php');
-    // }
+    if (empty($this->isSetSessionLogin())) {
+      $this->redirect('../login/login.php');
+    }
 
     //ログイン用セッション以外の全てのセッションを破棄する
     $this->clearSession();
 
-    $this->buffer('../menu/view/index_view.php', '', '');
+    //ログインした選手の情報を取得する
+    $H['login'] = $this->getSessionLogin();
+
+    $this->buffer('../menu/view/index_view.php', $H, '');
   }
 }
 

@@ -11,6 +11,10 @@
     <h1>メニュー</h1>
 
     <div>
+      <?php echo $H['login']['player_name']; ?>選手
+    </div>
+
+    <div>
        <input type="button" value="選手" name="btn_reset" onclick="location.href = '../player/index.php'">
     </div>
 
@@ -23,7 +27,7 @@
     </div>
 
     <div>
-       <input type="button" value="ログアウト" name="btn_reset" onclick="location.href = 'index.php'">
+       <input type="button" value="ログアウト" name="btn_reset" onclick="location.href = '../login/login.php'">
     </div>
 
   </body>

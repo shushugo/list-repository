@@ -239,5 +239,12 @@ class Controller {
     }
   }
 
+  //ログインに関するセッションをゲットする
+  protected function getSessionLogin() {
+    if (!empty($_SESSION['login'])) {
+      return $_SESSION['login'];
+    }
+  }
+
 }
 ?>
