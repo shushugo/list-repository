@@ -28,11 +28,12 @@ class CompController extends Controller {
         $H['res'] = $mst_player->delete($data);
       } else if ($H['update']) {
         //データ更新
+        $data['update_at'] = date('Y-m-d H:i:s');
         $H['crud'] = '更新';
         $H['res'] = $mst_player->update($data, $data['player_id']);
       } else {
         //データ追加
-        $H['insert_at'] = date('Y-m-d H:i:s');
+        $data['insert_at'] = date('Y-m-d H:i:s');
         $H['crud'] = '追加';
         $H['res'] = $mst_player->insert($data);
       }

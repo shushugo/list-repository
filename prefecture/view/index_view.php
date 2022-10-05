@@ -55,5 +55,8 @@
     <?php } else { ?>
       「データが存在しません」
     <?php } ?>
+
+    <input type="button" value="ログアウト" name="btn_logout" onclick="location.href = '../login/login.php'">
+    <input type="button" value="メニュー" name="btn_menu" onclick="location.href = '../menu/index.php'">
   </body>
 </html>
