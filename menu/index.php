@@ -10,7 +10,7 @@ class IndexController extends Controller {
 
     //ログイン用セッションに値がないときはログイン画面に飛ぶ
     if (empty($this->isSetSessionLogin())) {
-      $this->redirect('../login/login.php');
+      $this->redirect('../login/index.php');
     }
 
     //ログイン用セッション以外の全てのセッションを破棄する

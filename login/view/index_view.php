@@ -16,7 +16,7 @@
       選手ID又はパスワードが違います。
     <?php } ?>
     
-    <form action="login.php" method="POST">
+    <form action="index.php" method="POST">
       <div>
         <div>
           選手ID
@@ -30,6 +30,7 @@
       </div>
 
       <input type="submit" value="ログイン" name="btn_login">
+      <input type="button" value="新規登録" name="btn_menu" onclick="location.href = '../login/edit.php'">
     </form>
   </body>
 </html>
