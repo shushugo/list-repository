@@ -19,6 +19,11 @@ class IndexController extends Controller {
       ]
     ];
 
+    //ログイン用セッションに値がないときはログイン画面に飛ぶ
+    if (empty($this->isSetSessionLogin())) {
+      $this->redirect('../login/index.php');
+    }
+
     //能力登録用のセッションを破棄する
     $this->clearSessionAbility('register');
     //更新用のセッションを破棄する

@@ -24,7 +24,6 @@ class ConfController extends Controller {
         'sex_div' => '',
         'prefecture_cd' => '',
         'player_age' => '',
-        'player_password' => '',
         'player_note' => '',
         'ability_cd' => ''
       ]

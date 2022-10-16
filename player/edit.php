@@ -24,7 +24,6 @@ class EditController extends Controller {
         'sex_div' => '',
         'prefecture_cd' => '',
         'player_age' => '',
-        'player_password' => '',
         'player_note' => '',
         'ability_cd' => ''
       ]
@@ -106,13 +105,6 @@ class EditController extends Controller {
     //性別
     if ($this->isRequired($data['sex_div'])) {
       $err['sex_div'] = $this->isRequired($data['sex_div']);
-    }
-
-    //パスワード
-    if ($this->isRequired($data['player_password'])) {
-      $err['player_password'] = $this->isRequired($data['player_password']);
-    } else if ($this->isMaxLength($data['player_password'], 50)) {
-      $err['player_password'] = $this->isMaxLength($data['player_password'], 50);
     }
 
     return $err;

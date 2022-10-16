@@ -26,7 +26,7 @@ class EditController extends Controller {
       $H['err'] = $this->validation($H['register'], $mst_user);
 
       if (empty($H['err'])) {
-        $this->setSessionUser('register', $H['register']);
+        $this->setSessionLogin($H['register']);
         $H['res'] = $mst_user->insert($H['register']);
 
         $this->redirect('../menu/index.php');

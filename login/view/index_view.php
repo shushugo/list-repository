@@ -13,19 +13,19 @@
     </div>
     
     <?php if (!empty($H['err'])) { ?>
-      選手ID又はパスワードが違います。
+      <?php echo $H['err']; ?>
     <?php } ?>
     
     <form action="index.php" method="POST">
       <div>
         <div>
-          選手ID
-          <input type="text" name="player_id" value="">
+          ユーザーID
+          <input type="text" name="user_id" value="">
         </div>
 
         <div>
-          パスワード
-          <input type="text" name="player_password" value="">
+          ユーザーパスワード
+          <input type="password" name="user_password" value="">
         </div>
       </div>
 

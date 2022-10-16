@@ -38,7 +38,7 @@
 
         <div>
           パスワード
-          <input type="text" name="user_password" value="<?= $H['register']['user_password'] ?>">
+          <input type="password" name="user_password" value="<?= $H['register']['user_password'] ?>">
           
           <?php if (!empty($H['err']['user_password'])) {
             echo $H['err']['user_password'];

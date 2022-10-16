@@ -113,15 +113,6 @@
         </div>
 
         <div>
-          パスワード
-          <input type="text" name="player_password" value="<?= $H['register']['player_password'] ?>">
-          
-          <?php if (!empty($H['err']['player_password'])) {
-            echo $H['err']['player_password'];
-          } ?>
-        </div>
-
-        <div>
           備考
           <input type="text" name="player_note" value="<?= $H['register']['player_note'] ?>">
           

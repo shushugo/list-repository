@@ -12,7 +12,6 @@ class MstPlayer extends SQL {
     'prefecture_cd' => '',
     'ability_cd' => '',
     'player_age' => '',
-    'player_password' => '',
     'player_note' => '',
     'insert_at' => '',
     'update_at' => ''

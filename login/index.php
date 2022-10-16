@@ -9,13 +9,13 @@ class IndexController extends Controller {
   public function load() {
     //モデルの読み込み
     require_once '../library/SQL.php';
-    require_once '../player/model/mst_player.php';
-    $mst_player = new MstPlayer;
+    require_once 'model/mst_user.php';
+    $mst_user = new MstUser;
 
     $H = [
       'login' => [
-        'player_id' => '',
-        'player_password' => ''
+        'user_id' => '',
+        'user_password' => ''
       ]
     ];
 
@@ -25,19 +25,19 @@ class IndexController extends Controller {
     if ($this->isPost()) {
       $H['login'] = $this->getPostParams($H['login']);
 
-      if (!empty($H['login']['player_id']) && !empty($H['login']['player_password'])) {
-        //選手ID、パスワードを元に選手マスタを検索する
-        $H['data'] = $mst_player->getData($H['login']);
+      if (!empty($H['login']['user_id']) && !empty($H['login']['user_password'])) {
+        //ユーザーID、パスワードを元に選手マスタを検索する
+        $H['data'] = $mst_user->getData($H['login']);
 
         if (!empty($H['data'])) {
           $this->setSessionLogin($H['data']);
           $this->redirect('../menu/index.php');
         } else {
-          $H['err'] = 1;
+          $H['err'] = 'ユーザID又はパスワードが違います';
         }
 
       } else {
-        $H['err'] = 1;
+        $H['err'] = 'ユーザーID又はパスワードを入力してください';
       }
     }
 

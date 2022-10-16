@@ -11,7 +11,7 @@
     <h1>メニュー</h1>
 
     <div>
-      <?php echo $H['login']['player_name']; ?>選手
+      ログイン者名:<?php echo $H['login']['user_name']; ?>
     </div>
 
     <div>
@@ -27,7 +27,7 @@
     </div>
 
     <div>
-       <input type="button" value="ログアウト" name="btn_reset" onclick="location.href = '../login/login.php'">
+       <input type="button" value="ログアウト" name="btn_reset" onclick="location.href = '../login/index.php'">
     </div>
 
   </body>

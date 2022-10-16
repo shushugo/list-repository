@@ -38,9 +38,6 @@
       年齢
       <?= $H['register']['player_age'] ?><br>
 
-      パスワード
-      <?= $H['register']['player_password'] ?><br>
-
       備考
       <?= $H['register']['player_note'] ?>
     </div>
